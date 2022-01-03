@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Data_Stractures_Wet_2"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Data_Stractures_Wet_2">
+				<Option output="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug/Data_Stractures_Wet_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/usr/local/Cellar/gcc/10.2.0/lib/gcc/10/gcc/x86_64-apple-darwin19/10.2.0/include"/>
+					<Add directory="/usr/local/Cellar/gcc/10.2.0/lib/gcc/10/gcc/x86_64-apple-darwin19/10.2.0/include-fixed"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Data_Stractures_Wet_2"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Data_Stractures_Wet_2/fast">
+				<Option output="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug/Data_Stractures_Wet_2" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include"/>
+					<Add directory="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/usr/local/Cellar/gcc/10.2.0/lib/gcc/10/gcc/x86_64-apple-darwin19/10.2.0/include"/>
+					<Add directory="/usr/local/Cellar/gcc/10.2.0/lib/gcc/10/gcc/x86_64-apple-darwin19/10.2.0/include-fixed"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 Data_Stractures_Wet_2/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/Users/guycohen/OneDrive\ -\ Technion/1\ Courses/Data\ Structures\ 1/Homework/Wet\ 2/Data-Stractures-Wet-2/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Game.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Game.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTable.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTable.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelNode.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelTree.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/UnionFind.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/UnionFind.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/main2.cpp">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
