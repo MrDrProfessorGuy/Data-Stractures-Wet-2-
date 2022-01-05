@@ -14,7 +14,9 @@ LevelData::~LevelData(){}
 int LevelData::getLevel(){
     return level;
 }
-
+int LevelData::numOfPlayers(){
+    return num_of_players;
+}
 int LevelData::getLevelSum() {
     return level_sum;
 }
@@ -35,23 +37,39 @@ void LevelData::setSubTreePlayers (int new_sub_tree_players){
 }
 
 void LevelData::addNewData(const Player& player){
+    num_of_players++;
     level_sum += player.level;
     sub_tree_players++;
     score_hist[player.score]++;
 }
 void LevelData::removeData(const Player& player){
+    num_of_players--;
     level_sum -= player.level;
     sub_tree_players--;
     score_hist[player.score]--;
+    
 }
 
-void LevelData::mergeLevelData(const LevelData& level_data) {
-    level_sum += level_data.level_sum;
-    sub_tree_players += level_data.sub_tree_players;
-    
-    for(int i = 0; i < HIST_SIZE; i++){
-        score_hist[i] += level_data.score_hist[i];
+// action = true - add
+// action = false - subtraction
+void LevelData::mergeLevelData(const LevelData& level_data, bool action) {
+    if(action){
+        level_sum += level_data.level_sum;
+        sub_tree_players += level_data.sub_tree_players;
+        
+        for(int i = 0; i < HIST_SIZE; i++){
+            score_hist[i] += level_data.score_hist[i];
+        }
     }
+    else{
+        level_sum -= level_data.level_sum;
+        sub_tree_players -= level_data.sub_tree_players;
+    
+        for(int i = 0; i < HIST_SIZE; i++){
+            score_hist[i] -= level_data.score_hist[i];
+        }
+    }
+    
 }
 // rewmove : action = false
 // add : action = true
@@ -86,6 +104,13 @@ bool LevelData::operator!=(const LevelData& level_data) const{
 }
 
 LevelData& LevelData::operator+=(const LevelData& level_data){
-    this->mergeLevelData(level_data);
+    this->mergeLevelData(level_data,true);
     return *this;
+}
+
+LevelData& operator-(const LevelData& level_data1, const LevelData& level_data2){
+    LevelData new_level = LevelData(INVALID_LEVEL);
+    new_level.mergeLevelData(level_data1,true);
+    new_level.mergeLevelData(level_data2,false);
+    return new_level;
 }

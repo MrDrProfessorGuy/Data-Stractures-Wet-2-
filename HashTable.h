@@ -30,7 +30,6 @@ public:
     void insert(Player& new_player);
     void remove(int playerID);
     
-    
 
 };
 

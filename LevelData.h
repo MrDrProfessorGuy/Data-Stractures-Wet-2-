@@ -8,13 +8,16 @@
 #include "Player.h"
 
 #define HIST_SIZE 200
+#define INVALID_LEVEL -1
 
 class LevelData {
 private:
     int level;
+    int num_of_players;
     int level_sum;
     int sub_tree_players;
     int score_hist[HIST_SIZE];
+    
 public:
 
     LevelData(int level);
@@ -23,6 +26,7 @@ public:
     ~LevelData();
     
     int getLevel();
+    int numOfPlayers();
     int getLevelSum();
     int getSubPlayers();
     int* getScore();
@@ -31,7 +35,7 @@ public:
     void setSubTreePlayers (int new_sub_tree_players);
     void addNewData(const Player& player);
     void removeData(const Player& player);
-    void mergeLevelData(const LevelData& level_data);
+    void mergeLevelData(const LevelData& level_data, bool action);
     void updateScore(int score, bool action);
     
     bool operator<(const LevelData& level_data) const;
@@ -41,9 +45,10 @@ public:
     
     LevelData& operator+=(const LevelData& level_data);
     LevelData& operator-=(const LevelData& level_data);
-    
+  
 };
 
 LevelData& operator+(const LevelData& level_data1, const LevelData& level_data2);
+LevelData& operator-(const LevelData& level_data1, const LevelData& level_data2);
 
 #endif //DATA_STRACTURES_WET_2_LEVELDATA_H

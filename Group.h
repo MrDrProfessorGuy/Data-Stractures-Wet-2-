@@ -19,8 +19,8 @@ typedef enum {
 
 class Group {
 private:
-    LevelData* getLevelData(int level);
-
+    LevelData getLevelData(int level);
+    LevelData getGroupRank();
 
 public:
     int id;
@@ -35,7 +35,7 @@ public:
     bool merge(Group& group);
     
     LevelData getRank(int level, bool& levelFound);
-    int getTopPlayersStats(int num_of_players, int &lower_stat, int &higher_stat);
+    bool getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &quotient);
     
     
     void setLevelTree(LevelTree& level_tree);

@@ -181,13 +181,38 @@ public:
         }
         return iter->data;
     }
-    LevelData getRank(const int key, LevelData initial_rank, bool ReturnNULL = true) const{
+    Iterator findIter(const int key, bool ReturnNULL = true){
         if (head == nullptr){
-            return initial_rank;
+            return firstInOrder();
+        }
+        Node iter = this->head;
+        Node last_right = nullptr;
+        while(iter != nullptr && *(iter->key) != key)
+        {
+            if(key < *(iter->key)){
+                iter = iter->left;
+            }
+            else{
+                last_right = iter;
+                iter = iter->right;
+            }
+        }
+        
+        if (iter == nullptr){
+            if (ReturnNULL == false){
+                return Iterator(last_right);
+            }
+            return firstInOrder();
+        }
+        return Iterator(iter);
+    }
+    LevelData getRank(const int key, bool ReturnNULL = true) const{
+        if (head == nullptr){
+            return LevelData(key);
         }
         
         Node iter = this->head;
-        LevelData rank(initial_rank);
+        LevelData rank(key);
         LevelData last_right_rank(rank);
         while(iter != nullptr && *(iter->key) != key){
             if(key < *(iter->key)){
@@ -207,16 +232,16 @@ public:
             if (ReturnNULL == false){
                 return last_right_rank;
             }
-            return initial_rank;
+            return LevelData(key);
         }
         return rank;
     }
 
-    LevelData getLevelDataRank(const int key, LevelData initial_rank, int dataFunc(LevelData&), bool ReturnNULL = true) const{
+    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
         if (head == nullptr){
-            return initial_rank;
+            return LevelData(key);
         }
-        LevelData rank(initial_rank);
+        LevelData rank(key);
         LevelData last_right_rank(rank);
         Node iter = this->head;
         while(iter != nullptr && dataFunc(*(iter)->data) != key){
@@ -237,7 +262,7 @@ public:
             if (ReturnNULL == false){
                 return last_right_rank;
             }
-            return initial_rank;
+            return LevelData(key);
         }
         return rank;
     }
@@ -433,10 +458,6 @@ private:
         }
         delete root;
         root = nullptr;
-    }
-    
-    Iterator& sum(Iterator& iter1, Iterator& iter2){
-    
     }
     
     Iterator nextInMerge(Iterator& iter1, Iterator& iter2){

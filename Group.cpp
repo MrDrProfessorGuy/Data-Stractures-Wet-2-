@@ -47,8 +47,12 @@ void Group::removePlayer(int player_id){
     }
     Player player = players.find(player_id);
     
-    LevelData* level_data = getLevelData(player.level);
-    level_data->removeData(player);
+    LevelData level_data = getLevelData(player.level);
+    level_data.removeData(player);
+    
+    if (level_data.numOfPlayers() == 0){
+        level_tree.removeNode(level_data.getLevel());
+    }
     
     players.remove(player_id);
 }
@@ -59,8 +63,8 @@ void Group::updatePlayerLevel(int player_id, int new_level){
     }
     Player player = players.find(player_id);
     
-    LevelData* level_data = getLevelData(player.level);
-    level_data->removeData(player);
+    LevelData level_data = getLevelData(player.level);
+    level_data.removeData(player);
     
     player.setLevel(new_level);
     level_data->addNewData(player);
@@ -122,26 +126,39 @@ LevelData Group::getRank(int level, bool& levelFound){
         if (!level_tree.exists(level)){
             levelFound = false;
         }
-        return (level_tree.getRank(level, level_rank, false));
+        return (level_tree.getRank(level,false));
     }
 
 }
-int Group::getTopPlayersStats(int num_of_players, LevelData &lower_stat, LevelData &higher_stat){
+bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &quotient){
     LevelData *level_data;
-    LevelTree::Iterator level_iter = level_tree.lastInOrder();
-    if(*level_iter == nullptr){
-        return 0;
+    
+    LevelData higher_bound = getGroupRank();
+    if(higher_bound == LevelData(INVALID_LEVEL)){
+        return false;//Failure
     }
-    int total_players = (*level_iter)->getSubPlayers();
+
+    int total_players = higher_bound.getSubPlayers();
     if(num_of_players > total_players){
-        return -1;
+        return false;//Failure
+    }
+    else if(num_of_players == total_players){
+        quotient = higher_bound;
     }
     
-    int target_num_players = (*level_iter)->getSubPlayers() - num_of_players;
-    lower_stat = level_tree.getLevelDataRank(num_of_players-1,0,dataFunc,true);
-    higher_stat = level_iter;
-
-//find the first node that level_sum - sub_tree_players < m
+    int target_num_players = total_players - num_of_players;
+    LevelData lower_bound = level_tree.getLevelDataRank(target_num_players,dataFunc,false);
+    if (lower_bound.getSubPlayers() == target_num_players){
+        quotient = higher_bound - lower_bound;
+    }
+    else{
+        LevelTree::Iterator remainder_iter = level_tree.findIter(Remainder.getLevel());
+        remainder_iter++;
+        
+        quotient = *(*remainder_iter) - higher_bound;
+        Remainder = lower_bound - *(*remainder_iter);
+    }
+    return true;//Success
 }
 
 
@@ -165,11 +182,23 @@ void Group::GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayer
 // ============================= Private Methods ============================= //
 // =========================================================================== //
 
-LevelData* Group::getLevelData(int level){
+LevelData Group::getLevelData(int level){
     if (level == 0){
-        return &levelZero;
+        return levelZero;
     }
     else{
-        return level_tree.find(level);
+        return ((*level_tree.find(level)) + levelZero);
+    }
+}
+
+LevelData Group::getGroupRank(){
+    if (*level_tree.root() == nullptr){
+        if (levelZero.numOfPlayers() > 0){
+            return levelZero;
+        }
+        return LevelData(INVALID_LEVEL);
+    }
+    else{
+        return getLevelData((*level_tree.root())->getLevel());
     }
 }
