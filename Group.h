@@ -1,6 +1,4 @@
-//
-// Created by guy cohen on 30/12/2021.
-//
+
 
 #ifndef DATA_STRACTURES_WET_2_GROUP_H
 #define DATA_STRACTURES_WET_2_GROUP_H

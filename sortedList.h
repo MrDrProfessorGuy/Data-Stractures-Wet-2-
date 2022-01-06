@@ -73,13 +73,15 @@ template<class T>
     class SortedList {
     public:
         class const_iterator;
+        class RealConst_iterator;
         SortedList() : size(2){
             Node<T>::linkNodes(head, end_node);
         }
         SortedList(const SortedList& list) : size(2){
             Node<T>::linkNodes(head, end_node);
-            const_iterator end_of_list = list.end();
-            const_iterator iterator = list.begin();
+            RealConst_iterator end_of_list = list.constEnd();
+            RealConst_iterator iterator = list.constBegin();
+
             try {
                 while (iterator != end_of_list){
                     insert(*iterator);
@@ -172,10 +174,16 @@ template<class T>
         const_iterator begin(){
             return ++const_iterator(head);
         }
+        RealConst_iterator constBegin() const{
+            return ++const_iterator(head);
+        }
         /**
          * return const_pointer to the last (biggest) data element
          */
         const_iterator end(){
+            return const_iterator(end_node);
+        }
+        RealConst_iterator constEnd() const{
             return const_iterator(end_node);
         }
     
@@ -231,7 +239,7 @@ template<class T>
         const_iterator() = delete;
         const_iterator(Node<T>& node_ptr) : node(&node_ptr){
         }
-    
+
     
     public:
         friend class SortedList<T>;
@@ -298,6 +306,80 @@ template<class T>
         }
     };
 
+    template<class T>
+    class SortedList<T>::RealConst_iterator{
+        const Node<T>* node;
+    
+        RealConst_iterator() = delete;
+        RealConst_iterator(const Node<T>& node_ptr) : node(&node_ptr){
+        }
+    
+    
+    public:
+        friend class SortedList<T>;
+        RealConst_iterator(const RealConst_iterator&) = default;///remove const?
+        RealConst_iterator& operator=(const RealConst_iterator&) = default;
+        ~RealConst_iterator() = default;
+        RealConst_iterator& operator++(){
+            if (node == nullptr){
+                throw std::out_of_range("");
+            }
+            node = node->next; // node->next is null_ptr by default
+            return *this;
+        }
+        RealConst_iterator operator++(int){
+            if (node == nullptr){
+                throw std::out_of_range("");
+            }
+            RealConst_iterator tmp_iterator = *this;
+            ++(*this);
+            return tmp_iterator;
+            
+        }
+        RealConst_iterator& operator--(){
+            if (node == nullptr){
+                throw std::out_of_range("");
+            }
+            node = node->previus; // node->previus is null_ptr by default
+            return *this;
+        }
+        RealConst_iterator operator--(int){
+            if (node == nullptr){
+                throw std::out_of_range("");
+            }
+            RealConst_iterator tmp_iterator = *this;
+            --(*this);
+            return tmp_iterator;
+        }
+        T& operator*() const{
+            if (node == nullptr){
+                throw std::out_of_range("");
+            }
+            return *(node->data);
+        }
+        
+        bool operator==(const RealConst_iterator& iterator) const{
+            if (iterator.node == nullptr || node == nullptr){
+                return false;
+            }
+            if (node == iterator.node){
+                return true;
+            }
+    
+    /*        /// using < in case T has not implemented '==' or '>'
+            if (!(*(node->data) < *(iterator.node->data)) &&
+                !(*(iterator.node->data) < *(node->data))){
+                return true;
+            }
+            */
+            return false;
+        }
+        bool operator!=(const RealConst_iterator& iterator) const{
+            return !(node == iterator.node);
+            
+        }
+    };
+    
 /*************************************************************/
 /********************* Function Objects *********************/
 /***********************************************************/

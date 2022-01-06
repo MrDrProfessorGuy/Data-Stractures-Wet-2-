@@ -75,6 +75,52 @@ CMAKE_BINARY_DIR = "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structure
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -142,59 +188,57 @@ Data_Stractures_Wet_2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/build
 .PHONY : Data_Stractures_Wet_2/fast
 
-Game.o: Game.cpp.o
+#=============================================================================
+# Target rules for targets named gmock
 
-.PHONY : Game.o
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
 
-# target to build an object file
-Game.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.o
-.PHONY : Game.cpp.o
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) $(MAKESILENT) -f googletest-main/googlemock/CMakeFiles/gmock.dir/build.make googletest-main/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
 
-Game.i: Game.cpp.i
+#=============================================================================
+# Target rules for targets named gmock_main
 
-.PHONY : Game.i
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
 
-# target to preprocess a source file
-Game.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.i
-.PHONY : Game.cpp.i
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) $(MAKESILENT) -f googletest-main/googlemock/CMakeFiles/gmock_main.dir/build.make googletest-main/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
 
-Game.s: Game.cpp.s
+#=============================================================================
+# Target rules for targets named gtest_main
 
-.PHONY : Game.s
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
 
-# target to generate assembly for a file
-Game.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.s
-.PHONY : Game.cpp.s
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f googletest-main/googletest/CMakeFiles/gtest_main.dir/build.make googletest-main/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
 
-Group.o: Group.cpp.o
+#=============================================================================
+# Target rules for targets named gtest
 
-.PHONY : Group.o
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
 
-# target to build an object file
-Group.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.o
-.PHONY : Group.cpp.o
-
-Group.i: Group.cpp.i
-
-.PHONY : Group.i
-
-# target to preprocess a source file
-Group.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.i
-.PHONY : Group.cpp.i
-
-Group.s: Group.cpp.s
-
-.PHONY : Group.s
-
-# target to generate assembly for a file
-Group.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.s
-.PHONY : Group.cpp.s
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f googletest-main/googletest/CMakeFiles/gtest.dir/build.make googletest-main/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
 
 HashTable.o: HashTable.cpp.o
 
@@ -222,33 +266,6 @@ HashTable.s: HashTable.cpp.s
 HashTable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTable.cpp.s
 .PHONY : HashTable.cpp.s
-
-LevelData.o: LevelData.cpp.o
-
-.PHONY : LevelData.o
-
-# target to build an object file
-LevelData.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.o
-.PHONY : LevelData.cpp.o
-
-LevelData.i: LevelData.cpp.i
-
-.PHONY : LevelData.i
-
-# target to preprocess a source file
-LevelData.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.i
-.PHONY : LevelData.cpp.i
-
-LevelData.s: LevelData.cpp.s
-
-.PHONY : LevelData.s
-
-# target to generate assembly for a file
-LevelData.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.s
-.PHONY : LevelData.cpp.s
 
 Player.o: Player.cpp.o
 
@@ -304,32 +321,32 @@ UnionFind.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.s
 .PHONY : UnionFind.cpp.s
 
-main2.o: main2.cpp.o
+UnionFindTest.o: UnionFindTest.cpp.o
 
-.PHONY : main2.o
+.PHONY : UnionFindTest.o
 
 # target to build an object file
-main2.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.o
-.PHONY : main2.cpp.o
+UnionFindTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.o
+.PHONY : UnionFindTest.cpp.o
 
-main2.i: main2.cpp.i
+UnionFindTest.i: UnionFindTest.cpp.i
 
-.PHONY : main2.i
+.PHONY : UnionFindTest.i
 
 # target to preprocess a source file
-main2.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.i
-.PHONY : main2.cpp.i
+UnionFindTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.i
+.PHONY : UnionFindTest.cpp.i
 
-main2.s: main2.cpp.s
+UnionFindTest.s: UnionFindTest.cpp.s
 
-.PHONY : main2.s
+.PHONY : UnionFindTest.s
 
 # target to generate assembly for a file
-main2.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.s
-.PHONY : main2.cpp.s
+UnionFindTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.s
+.PHONY : UnionFindTest.cpp.s
 
 # Help Target
 help:
@@ -338,29 +355,28 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... Data_Stractures_Wet_2"
-	@echo "... Game.o"
-	@echo "... Game.i"
-	@echo "... Game.s"
-	@echo "... Group.o"
-	@echo "... Group.i"
-	@echo "... Group.s"
+	@echo "... gmock"
+	@echo "... gmock_main"
+	@echo "... gtest"
+	@echo "... gtest_main"
 	@echo "... HashTable.o"
 	@echo "... HashTable.i"
 	@echo "... HashTable.s"
-	@echo "... LevelData.o"
-	@echo "... LevelData.i"
-	@echo "... LevelData.s"
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
 	@echo "... UnionFind.o"
 	@echo "... UnionFind.i"
 	@echo "... UnionFind.s"
-	@echo "... main2.o"
-	@echo "... main2.i"
-	@echo "... main2.s"
+	@echo "... UnionFindTest.o"
+	@echo "... UnionFindTest.i"
+	@echo "... UnionFindTest.s"
 .PHONY : help
 
 
