@@ -1,6 +1,3 @@
-//
-// Created by guy cohen on 30/12/2021.
-//
 
 #ifndef DATA_STRACTURES_WET_2_LEVELDATA_H
 #define DATA_STRACTURES_WET_2_LEVELDATA_H
@@ -29,14 +26,18 @@ public:
     int numOfPlayers();
     int getLevelSum();
     int getSubPlayers();
-    int* getScore();
+    int* getScoreHist();
     void setLevel(int new_level);
     void setLevelSum (int new_level_sum);
+    void setNumOfPlayers(int num);
     void setSubTreePlayers (int new_sub_tree_players);
+    void setScoreHist(int *score_hist);
     void addNewData(const Player& player);
     void removeData(const Player& player);
     void mergeLevelData(const LevelData& level_data, bool action);
     void updateScore(int score, bool action);
+    
+    void swapSubTreeData(LevelData& level_data1, LevelData& level_data2);
     
     bool operator<(const LevelData& level_data) const;
     bool operator>(const LevelData& level_data) const;
@@ -48,7 +49,7 @@ public:
   
 };
 
-LevelData& operator+(const LevelData& level_data1, const LevelData& level_data2);
-LevelData& operator-(const LevelData& level_data1, const LevelData& level_data2);
+LevelData operator+(const LevelData& level_data1, const LevelData& level_data2);
+LevelData operator-(const LevelData& level_data1, const LevelData& level_data2);
 
 #endif //DATA_STRACTURES_WET_2_LEVELDATA_H

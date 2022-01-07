@@ -175,7 +175,7 @@ template<class T>
             return ++const_iterator(head);
         }
         RealConst_iterator constBegin() const{
-            return ++const_iterator(head);
+            return ++RealConst_iterator(head);
         }
         /**
          * return const_pointer to the last (biggest) data element
@@ -184,7 +184,7 @@ template<class T>
             return const_iterator(end_node);
         }
         RealConst_iterator constEnd() const{
-            return const_iterator(end_node);
+            return RealConst_iterator(end_node);
         }
     
         template<class Condition>

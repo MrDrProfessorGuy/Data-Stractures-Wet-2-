@@ -155,7 +155,6 @@ public:
         return iter->data;
     }
     
-    
     LevelData* find(const int key, bool ReturnNULL = true) const{
         if (head == nullptr){
             return nullptr;
@@ -305,7 +304,11 @@ public:
             status = SUCCESS;
         }
         else{
-            removeNodeAux(this->head, key, status);
+            LevelData* data = find(key);
+            if (data == nullptr){
+                return SUCCESS;
+            }
+            removeNodeAux(this->head, key, data, status);
         }
         
         if (status == SUCCESS){
@@ -499,7 +502,7 @@ private:
         iter2++;
         return data;
     }
-    void mergeRankAux(Iterator& tree1, Iterator& tree2, Node current_node){
+    void mergeAux(Iterator& tree1, Iterator& tree2, Node current_node){
         if (current_node->left != nullptr){
             mergeAux(tree1, tree2, current_node->left);
         }
@@ -514,7 +517,7 @@ private:
         
     }
     
-    void mergeAux(Iterator& tree1, Iterator& tree2, Node current_node){
+    void mergeAuxOLD(Iterator& tree1, Iterator& tree2, Node current_node){
         if (current_node->left != nullptr){
             mergeAux(tree1, tree2, current_node->left);
         }
@@ -570,6 +573,7 @@ private:
     // O(Log(size))
     Node insertNodeAux(Node root, Node new_node, Status& status){
         Node node = nullptr;
+        (*root->data).addNewData(new_node->data);
         if(*new_node < *root){
             if (root->left == nullptr){
                 root->setLeft(new_node);
@@ -602,23 +606,24 @@ private:
         return node;
     }
     
-    void removeNodeAux(Node root, int key, Status & status){
+    void removeNodeAux(Node root, int key, LevelData& data, Status & status){
         if (root == nullptr)
         {
             status = NODE_DONT_EXIST;
             return;
         }
+        (*root->data).removeData(data);
         if(key < *(root->key)){
-            removeNodeAux(root->left, key, status);
+            removeNodeAux(root->left, key, data, status);
         }
         else if (*(root->key) < key){
-            removeNodeAux(root->right, key, status);
+            removeNodeAux(root->right, key, data, status);
         }
         else{
-            remove_tree_node(root);
-            //root = nullptr;
+            if ((*root->data).numOfPlayers() == 0){
+                remove_tree_node(root);
+            }
             status = SUCCESS;
-            //return;
         }
         
         if (status == SUCCESS && root != nullptr){
@@ -626,14 +631,27 @@ private:
             balanceTree(root);
         }
     }    //Node find(Node root ,Node node);
+    
+    static void swapNodeData(Node node1, Node node2){
+        if (node1 == nullptr || node2 == nullptr){
+            return;
+        }
+        int tmp_level = (*node1->data).getLevel();
+        int tmp_NOP = (*node1->data).numOfPlayers();
+        (*node1->data).setLevel((*node2->data).getLevel());
+        (*node1->data).setNumOfPlayers((*node2->data).numOfPlayers());
+        (*node2->data).setLevel(tmp_level);
+        (*node2->data).setNumOfPlayers(tmp_NOP);
+    }
+    
     void remove_tree_node(Node& root){
         // if root has 2 sub trees
         if(root->left != nullptr && root->right != nullptr) {
             Node next_order = smallest(root->right);
             
-            AVL_Node<int, LevelData>::swap(*root, *next_order);
+            swapNodeData(*root, *next_order);
             if (next_order->right != nullptr) {
-                AVL_Node<int, LevelData>::swap(*(next_order->right), *next_order);
+                swapNodeData(next_order->right, next_order);
                 delete (next_order->right);
                 next_order->right = nullptr;
             }
@@ -650,12 +668,12 @@ private:
         }
         else{ // root has one sub-tree
             if (root->left != nullptr){
-                AVL_Node<int, LevelData>::swap(*root, *(root->left));
+                swapNodeData(root, root->left);
                 delete (root->left);
                 root->left = nullptr;
             }
             else if (root->right != nullptr){
-                AVL_Node<int, LevelData>::swap(*root, *(root->right));
+                swapNodeData(root, root->right);
                 delete (root->right);
                 root->right = nullptr;
             }
@@ -710,11 +728,15 @@ private:
     //B = root, B_left = A
     void LL(Node B){
         Node parent = B->parent;
-        
         Node A = B->left;
+    
+        LevelData tmp = *(B->data);
+        *(B->data).removeData(*(A->data));
+        LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->left = A->right;
         if(A->right != nullptr) {
+            *(B->data).removeData(*(A->right)->data);
             A->right->parent = B;
         }
         
@@ -736,7 +758,6 @@ private:
         
         B->updateHeight();
         A->updateHeight();
-        
     }
     void LR(Node C){
         RR(C->left);
@@ -750,8 +771,13 @@ private:
         Node parent = B->parent;
         Node A = B->right;
         
+        LevelData tmp = *(B->data);
+        *(B->data).removeData(*(A->data));
+        LevelData::swapSubTreeData(*(A->data), tmp);
+        
         B->right = A->left;
         if(A->left != nullptr){
+            *(B->data).removeData(A->left->data);
             A->left->parent = B;
         }
         

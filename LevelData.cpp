@@ -24,6 +24,10 @@ int LevelData::getSubPlayers(){
     return sub_tree_players;
 }
 
+int* LevelData::getScoreHist() {
+    return score_hist;
+}
+
 void LevelData::setLevel(int new_level){
     level = new_level;
 }
@@ -36,6 +40,11 @@ void LevelData::setSubTreePlayers (int new_sub_tree_players){
     sub_tree_players = new_sub_tree_players;
 }
 
+void LevelData::setScoreHist(int *hist) {
+    for(int i = 0; i < HIST_SIZE; i++){
+        score_hist[i] = hist[i];
+    }
+}
 void LevelData::addNewData(const Player& player){
     num_of_players++;
     level_sum += player.level;
@@ -108,9 +117,30 @@ LevelData& LevelData::operator+=(const LevelData& level_data){
     return *this;
 }
 
-LevelData& operator-(const LevelData& level_data1, const LevelData& level_data2){
+LevelData operator-(const LevelData& level_data1, const LevelData& level_data2){
     LevelData new_level = LevelData(INVALID_LEVEL);
     new_level.mergeLevelData(level_data1,true);
     new_level.mergeLevelData(level_data2,false);
     return new_level;
 }
+
+void LevelData::swapSubTreeData(LevelData& level_data1, LevelData& level_data2){
+
+    int tmp_level_sum = level_data1.getLevelSum();
+    int tmp_STP = level_data1.getSubPlayers();
+    
+    int tmp_hist[HIST_SIZE];
+    for(int i = 0; i < HIST_SIZE; i++){
+        tmp_hist[i] = level_data1.score_hist[i];
+    }
+    
+    level_data1.setLevelSum(level_data2.getLevelSum());
+    level_data1.setSubTreePlayers(level_data2.getSubPlayers());
+    level_data1.setScoreHist(level_data2.getScoreHist());
+    
+    level_data2.setLevelSum(tmp_level_sum);
+    level_data2.setSubTreePlayers(tmp_STP);
+    level_data2.setScoreHist(tmp_hist);
+    
+}
+

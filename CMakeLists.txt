@@ -13,11 +13,11 @@ include_directories(googletest-main/googletest/include)
 include_directories(googletest-main/googlemock/include)
 
 add_executable(Data_Stractures_Wet_2
-        UnionFindTest.cpp
+        HashTest.cpp
         Player.cpp Player.h
         #Group.cpp Group.h
         #Game.cpp Game.h
-        #LevelData.cpp LevelData.h
+        LevelData.cpp LevelData.h
         HashTable.cpp HashTable.h
         UnionFind.cpp UnionFind.h
         LevelNode.h

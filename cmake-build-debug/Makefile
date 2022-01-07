@@ -267,6 +267,60 @@ HashTable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTable.cpp.s
 .PHONY : HashTable.cpp.s
 
+HashTest.o: HashTest.cpp.o
+
+.PHONY : HashTest.o
+
+# target to build an object file
+HashTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o
+.PHONY : HashTest.cpp.o
+
+HashTest.i: HashTest.cpp.i
+
+.PHONY : HashTest.i
+
+# target to preprocess a source file
+HashTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.i
+.PHONY : HashTest.cpp.i
+
+HashTest.s: HashTest.cpp.s
+
+.PHONY : HashTest.s
+
+# target to generate assembly for a file
+HashTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.s
+.PHONY : HashTest.cpp.s
+
+LevelData.o: LevelData.cpp.o
+
+.PHONY : LevelData.o
+
+# target to build an object file
+LevelData.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.o
+.PHONY : LevelData.cpp.o
+
+LevelData.i: LevelData.cpp.i
+
+.PHONY : LevelData.i
+
+# target to preprocess a source file
+LevelData.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.i
+.PHONY : LevelData.cpp.i
+
+LevelData.s: LevelData.cpp.s
+
+.PHONY : LevelData.s
+
+# target to generate assembly for a file
+LevelData.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.s
+.PHONY : LevelData.cpp.s
+
 Player.o: Player.cpp.o
 
 .PHONY : Player.o
@@ -321,33 +375,6 @@ UnionFind.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.s
 .PHONY : UnionFind.cpp.s
 
-UnionFindTest.o: UnionFindTest.cpp.o
-
-.PHONY : UnionFindTest.o
-
-# target to build an object file
-UnionFindTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.o
-.PHONY : UnionFindTest.cpp.o
-
-UnionFindTest.i: UnionFindTest.cpp.i
-
-.PHONY : UnionFindTest.i
-
-# target to preprocess a source file
-UnionFindTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.i
-.PHONY : UnionFindTest.cpp.i
-
-UnionFindTest.s: UnionFindTest.cpp.s
-
-.PHONY : UnionFindTest.s
-
-# target to generate assembly for a file
-UnionFindTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFindTest.cpp.s
-.PHONY : UnionFindTest.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -368,15 +395,18 @@ help:
 	@echo "... HashTable.o"
 	@echo "... HashTable.i"
 	@echo "... HashTable.s"
+	@echo "... HashTest.o"
+	@echo "... HashTest.i"
+	@echo "... HashTest.s"
+	@echo "... LevelData.o"
+	@echo "... LevelData.i"
+	@echo "... LevelData.s"
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
 	@echo "... UnionFind.o"
 	@echo "... UnionFind.i"
 	@echo "... UnionFind.s"
-	@echo "... UnionFindTest.o"
-	@echo "... UnionFindTest.i"
-	@echo "... UnionFindTest.s"
 .PHONY : help
 
 

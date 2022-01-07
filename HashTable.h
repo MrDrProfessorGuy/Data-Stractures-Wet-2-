@@ -27,7 +27,7 @@ public:
     void insert(Player& new_player);
     void remove(int playerID);
     void rehash(bool action);
-    void printHash();
+    void printHash(int index=-1);
     
     
 };
