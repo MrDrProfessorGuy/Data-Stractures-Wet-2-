@@ -366,9 +366,6 @@
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTable.h">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
-		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTest.cpp">
-			<Option target="Data_Stractures_Wet_2"/>
-		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.cpp">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
@@ -385,6 +382,9 @@
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/TreeTest.cpp">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/UnionFind.cpp">

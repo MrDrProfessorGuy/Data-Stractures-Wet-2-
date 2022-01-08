@@ -13,7 +13,7 @@ include_directories(googletest-main/googletest/include)
 include_directories(googletest-main/googlemock/include)
 
 add_executable(Data_Stractures_Wet_2
-        HashTest.cpp
+        TreeTest.cpp
         Player.cpp Player.h
         #Group.cpp Group.h
         #Game.cpp Game.h

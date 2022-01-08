@@ -18,9 +18,22 @@ private:
 public:
 
     LevelData(int level);
+    LevelData(Player& player);
     LevelData(const LevelData& level_data);
     LevelData& operator=(const LevelData& level_data) = default;
     ~LevelData();
+    
+    void iHateTrees(LevelData data, bool increase=false){
+        int sign = -1;
+        if (increase){
+            sign = 1;
+        }
+        level_sum += sign* (data.num_of_players * data.level);
+        sub_tree_players += sign* data.num_of_players;
+        for(int i = 0; i < HIST_SIZE; i++) {
+            score_hist[i] += sign* data.score_hist[i];
+        }
+    }
     
     int getLevel();
     int numOfPlayers();
@@ -34,10 +47,10 @@ public:
     void setScoreHist(int *score_hist);
     void addNewData(const Player& player);
     void removeData(const Player& player);
-    void mergeLevelData(const LevelData& level_data, bool action);
+    void mergeSubLevelData(const LevelData& level_data, bool action);
     void updateScore(int score, bool action);
     
-    void swapSubTreeData(LevelData& level_data1, LevelData& level_data2);
+    static void swapSubTreeData(LevelData& level_data1, LevelData& level_data2);
     
     bool operator<(const LevelData& level_data) const;
     bool operator>(const LevelData& level_data) const;

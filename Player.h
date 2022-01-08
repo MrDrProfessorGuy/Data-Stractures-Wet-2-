@@ -20,11 +20,12 @@ public:
     Player& operator=(const Player& player) = default;
     ~Player();
     
-    
-    
     void setScore(int new_score);
     void setLevel(int new_level);
     void setGroupID(int new_group);
+    
+    void increaseScore(int amount);
+    void increaseLevel(int amount);
     
     bool operator<(const Player& player) const;
     bool operator>(const Player& player) const;

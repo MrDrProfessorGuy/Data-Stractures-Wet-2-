@@ -76,18 +76,18 @@ include CMakeFiles/Data_Stractures_Wet_2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Data_Stractures_Wet_2.dir/flags.make
 
-CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o: CMakeFiles/Data_Stractures_Wet_2.dir/flags.make
-CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o: ../HashTest.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o -c "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTest.cpp"
+CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o: CMakeFiles/Data_Stractures_Wet_2.dir/flags.make
+CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o: ../TreeTest.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o -c "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/TreeTest.cpp"
 
-CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTest.cpp" > CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.i
+CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/TreeTest.cpp" > CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.i
 
-CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTest.cpp" -o CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.s
+CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/TreeTest.cpp" -o CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.s
 
 CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.o: CMakeFiles/Data_Stractures_Wet_2.dir/flags.make
 CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.o: ../Player.cpp
@@ -143,7 +143,7 @@ CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.s: cmake_force
 
 # Object files for target Data_Stractures_Wet_2
 Data_Stractures_Wet_2_OBJECTS = \
-"CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o" \
+"CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o" \
 "CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.o" \
 "CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.o" \
 "CMakeFiles/Data_Stractures_Wet_2.dir/HashTable.cpp.o" \
@@ -152,7 +152,7 @@ Data_Stractures_Wet_2_OBJECTS = \
 # External object files for target Data_Stractures_Wet_2
 Data_Stractures_Wet_2_EXTERNAL_OBJECTS =
 
-Data_Stractures_Wet_2: CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o
+Data_Stractures_Wet_2: CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o
 Data_Stractures_Wet_2: CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.o
 Data_Stractures_Wet_2: CMakeFiles/Data_Stractures_Wet_2.dir/LevelData.cpp.o
 Data_Stractures_Wet_2: CMakeFiles/Data_Stractures_Wet_2.dir/HashTable.cpp.o

@@ -64,7 +64,7 @@ public:
             return;
         }
         delete key;
-        data = new Key(new_key);
+        key = new Key(new_key);
     }
     
     /// Assumption: Key has "operator <"

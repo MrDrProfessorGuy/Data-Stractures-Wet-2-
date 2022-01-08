@@ -155,6 +155,20 @@ public:
         return iter->data;
     }
     
+    LevelData FuckTrees(Node node) const{
+        if (node == nullptr){
+            return LevelData(0);
+        }
+        LevelData data = *(node->data);
+        if (node->right != nullptr){
+            data -= *(node->right->data);
+        }
+        if (node->left != nullptr){
+            data -= *(node->left->data);
+        }
+        return data;
+    }
+    
     LevelData* find(const int key, bool ReturnNULL = true) const{
         if (head == nullptr){
             return nullptr;
@@ -205,19 +219,23 @@ public:
         }
         return Iterator(iter);
     }
-    LevelData getRank(const int key, bool ReturnNULL = true) const{
+    LevelData getRank(const int key, bool ReturnNULL = false) const{
         if (head == nullptr){
             return LevelData(key);
         }
         
         Node iter = this->head;
         LevelData rank(key);
+        if (iter != nullptr){
+            rank = LevelData(*iter->data);
+        }
         LevelData last_right_rank(rank);
         while(iter != nullptr && *(iter->key) != key){
             if(key < *(iter->key)){
-                rank += *(iter->data);
+                //rank += *(iter->data);
                 if (iter->right != nullptr){
                     rank -= *(iter->right->data);
+                    rank -= FuckTrees(iter);
                 }
                 iter = iter->left;
             }
@@ -233,19 +251,23 @@ public:
             }
             return LevelData(key);
         }
+        //rank += *(iter->data);
         return rank;
     }
 
-    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
+    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = false) const{
         if (head == nullptr){
             return LevelData(key);
         }
-        LevelData rank(key);
-        LevelData last_right_rank(rank);
         Node iter = this->head;
+        LevelData rank(key);
+        if (iter != nullptr){
+            rank = LevelData(*iter->data);
+        }
+        LevelData last_right_rank(rank);
         while(iter != nullptr && dataFunc(*(iter)->data) != key){
             if(key < dataFunc(*(iter)->data)){
-                rank += dataFunc(*(iter)->data);
+                //rank += dataFunc(*(iter)->data);
                 if (iter->right != nullptr){
                     rank -= dataFunc(*(iter->right)->data);
                 }
@@ -308,7 +330,7 @@ public:
             if (data == nullptr){
                 return SUCCESS;
             }
-            removeNodeAux(this->head, key, data, status);
+            removeNodeAux(this->head, key, *data, status);
         }
         
         if (status == SUCCESS){
@@ -573,7 +595,7 @@ private:
     // O(Log(size))
     Node insertNodeAux(Node root, Node new_node, Status& status){
         Node node = nullptr;
-        (*root->data).addNewData(new_node->data);
+        (*root->data).mergeSubLevelData(*(new_node->data), true);
         if(*new_node < *root){
             if (root->left == nullptr){
                 root->setLeft(new_node);
@@ -597,6 +619,8 @@ private:
         else{
             status = NODE_EXISTS;
             node = root;
+            int new_num_players = node->data->numOfPlayers() + new_node->data->numOfPlayers();
+            node->data->setNumOfPlayers(new_num_players);
         }
         
         if (status == SUCCESS){
@@ -612,7 +636,7 @@ private:
             status = NODE_DONT_EXIST;
             return;
         }
-        (*root->data).removeData(data);
+        (*root->data).mergeSubLevelData(data, false);
         if(key < *(root->key)){
             removeNodeAux(root->left, key, data, status);
         }
@@ -638,10 +662,13 @@ private:
         }
         int tmp_level = (*node1->data).getLevel();
         int tmp_NOP = (*node1->data).numOfPlayers();
+        int node2_level = node2->data->getLevel();
+        node1->setKey(node2_level);
         (*node1->data).setLevel((*node2->data).getLevel());
         (*node1->data).setNumOfPlayers((*node2->data).numOfPlayers());
         (*node2->data).setLevel(tmp_level);
         (*node2->data).setNumOfPlayers(tmp_NOP);
+        node2->setKey(tmp_level);
     }
     
     void remove_tree_node(Node& root){
@@ -649,9 +676,9 @@ private:
         if(root->left != nullptr && root->right != nullptr) {
             Node next_order = smallest(root->right);
             
-            swapNodeData(*root, *next_order);
+            LevelTree::swapNodeData(root, next_order);
             if (next_order->right != nullptr) {
-                swapNodeData(next_order->right, next_order);
+                LevelTree::swapNodeData(next_order->right, next_order);
                 delete (next_order->right);
                 next_order->right = nullptr;
             }
@@ -668,12 +695,12 @@ private:
         }
         else{ // root has one sub-tree
             if (root->left != nullptr){
-                swapNodeData(root, root->left);
+                LevelTree::swapNodeData(root, root->left);
                 delete (root->left);
                 root->left = nullptr;
             }
             else if (root->right != nullptr){
-                swapNodeData(root, root->right);
+                LevelTree::swapNodeData(root, root->right);
                 delete (root->right);
                 root->right = nullptr;
             }
@@ -731,12 +758,12 @@ private:
         Node A = B->left;
     
         LevelData tmp = *(B->data);
-        *(B->data).removeData(*(A->data));
+        (B->data)->mergeSubLevelData(*(A->data), false);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->left = A->right;
         if(A->right != nullptr) {
-            *(B->data).removeData(*(A->right)->data);
+            (B->data)->mergeSubLevelData(*(A->right)->data, true);
             A->right->parent = B;
         }
         
@@ -772,12 +799,12 @@ private:
         Node A = B->right;
         
         LevelData tmp = *(B->data);
-        *(B->data).removeData(*(A->data));
+        (B->data)->mergeSubLevelData(*(A->data), false);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->right = A->left;
         if(A->left != nullptr){
-            *(B->data).removeData(A->left->data);
+            (B->data)->mergeSubLevelData(*(A->left)->data, true);
             A->left->parent = B;
         }
         

@@ -267,33 +267,6 @@ HashTable.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTable.cpp.s
 .PHONY : HashTable.cpp.s
 
-HashTest.o: HashTest.cpp.o
-
-.PHONY : HashTest.o
-
-# target to build an object file
-HashTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.o
-.PHONY : HashTest.cpp.o
-
-HashTest.i: HashTest.cpp.i
-
-.PHONY : HashTest.i
-
-# target to preprocess a source file
-HashTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.i
-.PHONY : HashTest.cpp.i
-
-HashTest.s: HashTest.cpp.s
-
-.PHONY : HashTest.s
-
-# target to generate assembly for a file
-HashTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/HashTest.cpp.s
-.PHONY : HashTest.cpp.s
-
 LevelData.o: LevelData.cpp.o
 
 .PHONY : LevelData.o
@@ -348,6 +321,33 @@ Player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.s
 .PHONY : Player.cpp.s
 
+TreeTest.o: TreeTest.cpp.o
+
+.PHONY : TreeTest.o
+
+# target to build an object file
+TreeTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o
+.PHONY : TreeTest.cpp.o
+
+TreeTest.i: TreeTest.cpp.i
+
+.PHONY : TreeTest.i
+
+# target to preprocess a source file
+TreeTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.i
+.PHONY : TreeTest.cpp.i
+
+TreeTest.s: TreeTest.cpp.s
+
+.PHONY : TreeTest.s
+
+# target to generate assembly for a file
+TreeTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.s
+.PHONY : TreeTest.cpp.s
+
 UnionFind.o: UnionFind.cpp.o
 
 .PHONY : UnionFind.o
@@ -395,15 +395,15 @@ help:
 	@echo "... HashTable.o"
 	@echo "... HashTable.i"
 	@echo "... HashTable.s"
-	@echo "... HashTest.o"
-	@echo "... HashTest.i"
-	@echo "... HashTest.s"
 	@echo "... LevelData.o"
 	@echo "... LevelData.i"
 	@echo "... LevelData.s"
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
+	@echo "... TreeTest.o"
+	@echo "... TreeTest.i"
+	@echo "... TreeTest.s"
 	@echo "... UnionFind.o"
 	@echo "... UnionFind.i"
 	@echo "... UnionFind.s"

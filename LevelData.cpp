@@ -1,9 +1,16 @@
 #include "LevelData.h"
 
-LevelData::LevelData(int level): level(level), level_sum(), sub_tree_players() {};
+LevelData::LevelData(int level): level(level), num_of_players(0),
+                                level_sum(0), sub_tree_players(0), score_hist{0} {};
 
-LevelData::LevelData(const LevelData& level_data): level(level_data.level), level_sum(level_data.level_sum),
-                    sub_tree_players(level_data.sub_tree_players){
+LevelData::LevelData(Player& player): level(player.level), num_of_players(1),
+                                 level_sum(player.level), sub_tree_players(1), score_hist{0} {
+    score_hist[player.score] = 1;
+};
+
+
+LevelData::LevelData(const LevelData& level_data): level(level_data.level), num_of_players(level_data.num_of_players),
+                                    level_sum(level_data.level_sum), sub_tree_players(level_data.sub_tree_players){
     for(int i = 0; i < HIST_SIZE; i++) {
         score_hist[i] = level_data.score_hist[i];
     }
@@ -36,6 +43,11 @@ void LevelData::setLevelSum(int new_level_sum){
     level_sum = new_level_sum;
 }
 
+void LevelData::setNumOfPlayers(int num) {
+    num_of_players = num;
+}
+
+
 void LevelData::setSubTreePlayers (int new_sub_tree_players){
     sub_tree_players = new_sub_tree_players;
 }
@@ -61,10 +73,12 @@ void LevelData::removeData(const Player& player){
 
 // action = true - add
 // action = false - subtraction
-void LevelData::mergeLevelData(const LevelData& level_data, bool action) {
+void LevelData::mergeSubLevelData(const LevelData& level_data, bool action) {
     if(action){
         level_sum += level_data.level_sum;
+        //num_of_players += level_data.num_of_players;
         sub_tree_players += level_data.sub_tree_players;
+        
         
         for(int i = 0; i < HIST_SIZE; i++){
             score_hist[i] += level_data.score_hist[i];
@@ -72,6 +86,7 @@ void LevelData::mergeLevelData(const LevelData& level_data, bool action) {
     }
     else{
         level_sum -= level_data.level_sum;
+        //num_of_players -= level_data.num_of_players;
         sub_tree_players -= level_data.sub_tree_players;
     
         for(int i = 0; i < HIST_SIZE; i++){
@@ -113,14 +128,19 @@ bool LevelData::operator!=(const LevelData& level_data) const{
 }
 
 LevelData& LevelData::operator+=(const LevelData& level_data){
-    this->mergeLevelData(level_data,true);
+    this->mergeSubLevelData(level_data, true);
+    return *this;
+}
+
+LevelData& LevelData::operator-=(const LevelData& level_data){
+    this->mergeSubLevelData(level_data, false);
     return *this;
 }
 
 LevelData operator-(const LevelData& level_data1, const LevelData& level_data2){
     LevelData new_level = LevelData(INVALID_LEVEL);
-    new_level.mergeLevelData(level_data1,true);
-    new_level.mergeLevelData(level_data2,false);
+    new_level.mergeSubLevelData(level_data1, true);
+    new_level.mergeSubLevelData(level_data2, false);
     return new_level;
 }
 
