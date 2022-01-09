@@ -4,27 +4,11 @@
 
 
 
-//#include "Group.h"
-
+#include "Group.h"
 #include "memory"
 #include "assert.h"
 
-class Group{
-public:
-    int id;
-    int sum;
-    
-    
-    Group(int id):id(id), sum(1){}
-    Group(const Group&);
-    ~Group() = default;
-    
-    bool merge(Group& group){
-        sum += group.sum;
-        return true;
-    }
-    
-};
+
 
 
 class UnionFind{

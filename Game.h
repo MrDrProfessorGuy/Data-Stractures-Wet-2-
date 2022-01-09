@@ -14,7 +14,7 @@
 class Game {
 
 private:
-    static const int GameGroupID -10;
+    static const int GameGroupID = -10;
 public:
     int num_of_groups;
     int scale;
@@ -37,8 +37,7 @@ public:
             return FAILURE;
         }
         gameGroup.addPlayer(PlayerID, score);
-        Group group = unionGroup.find(GroupID);
-        group.addPlayer(PlayerID, score);
+        unionGroup.find(GroupID).addPlayer(PlayerID, score);
         return SUCCESS;
     }
     
@@ -50,9 +49,9 @@ public:
         if (gameGroup.players.exists(player.id)){
             return FAILURE;
         }
-        gameGroup.addPlayer(PlayerID, score);
-        Group group = unionGroup.find(GroupID);
-        group.addPlayer(PlayerID, score);
+        gameGroup.addPlayer(player.id, player.score);
+        
+        unionGroup.find(player.group_id).addPlayer(player.id, player.score);
         return SUCCESS;
     }
     
@@ -64,39 +63,107 @@ public:
         if (player == nullptr){
             return FAILURE;
         }
-        Group group = unionGroup.find(player->group_id);
-        group.removePlayer(playerID);
+        
+        unionGroup.find(player->group_id).removePlayer(playerID);
         gameGroup.removePlayer(playerID);
         return SUCCESS;
     }
     
-    void IncreasePlayerLevel(int PlayerID, int LevelIncrease){
+    StatusType IncreasePlayerLevel(int PlayerID, int LevelIncrease){
         if (PlayerID <= 0 || LevelIncrease <= 0){
-            return;INVALID_INPUT;
+            return INVALID_INPUT;
         }
-        Player* player = gameGroup.players.findPlayer(playerID);
+        Player* player = gameGroup.players.findPlayer(PlayerID);
         if (player == nullptr){
-            return FAILURE;
+            return  FAILURE;
         }
         Player player_copy = *player;
-        Group group = unionGroup.find(player->group_id);
         //remove
         removePlayer(player_copy.id);
         //increase
         player_copy.increaseLevel(LevelIncrease);
         //Insert
-        
-        
+        addPlayer(player_copy);
+        return SUCCESS;
     }
     
-    void ChangePlayerScore(int PlayerID, int NewScore);
+    StatusType ChangePlayerScore(int PlayerID, int NewScore){
+        if (PlayerID <= 0 || NewScore <= 0 || NewScore > scale){
+            return INVALID_INPUT;
+        }
+        Player* player = gameGroup.players.findPlayer(PlayerID);
+        if (player == nullptr){
+            return FAILURE;
+        }
+        gameGroup.updatePlayerScore(PlayerID, NewScore);
+        unionGroup.find(player->group_id).updatePlayerScore(PlayerID, NewScore);
+        //when Allocation Error?
+        return SUCCESS;
+    }
     
-    void getPercentOfPlayersWithScoreInBounds(int GroupID, int score, int lowerLevel, int higherLevel, double * players);
+    StatusType getPercentOfPlayersWithScoreInBounds(int GroupID, int score, int lowerLevel, int higherLevel, double * players){
+        if(players == nullptr || GroupID < 0 || GroupID > num_of_groups){
+            return INVALID_INPUT;
+        }
+        
+        if(GroupID == 0){
+            *players = gameGroup.getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
+        }
+        else{
+           *players = unionGroup.find(GroupID).getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
+        }
+        //when Allocation Error?
+        return SUCCESS;
+    }
     
-    void AverageHighestPlayerLevelByGroup(int GroupID, int num_of_players, double *level);
+    StatusType AverageHighestPlayerLevelByGroup(int GroupID, int num_of_players, double *level) {
+        if (level == nullptr || GroupID < 0 || GroupID > num_of_groups) {
+            return INVALID_INPUT;
+        }
+       
+        if(GroupID == 0){
+            if(num_of_players > gameGroup.getNumPlayers()){
+                return FAILURE;
+            }
+            gameGroup.AverageHighestPlayerLevel(num_of_players, *level);
+        }
+        else{
+            if(num_of_players > unionGroup.find(GroupID).getNumPlayers()){
+                return FAILURE;
+            }
+            unionGroup.find(GroupID).AverageHighestPlayerLevel(num_of_players, *level);
+        }
+        return SUCCESS;
+    }
+    StatusType GetPlayersBound(int GroupID, int score, int num_of_players, int *LowerBoundPlayers, int *HigherBoundPlayers){
+        if(LowerBoundPlayers == nullptr || HigherBoundPlayers == nullptr || GroupID < 0 || GroupID > num_of_groups
+                                        || score <= 0 || score > scale){
+            return INVALID_INPUT;
+        }
+        if(GroupID == 0){
+            if(num_of_players > gameGroup.getNumPlayers()){
+                return FAILURE;
+            }
+            gameGroup.GetPlayersBound(score, num_of_players,LowerBoundPlayers,HigherBoundPlayers);
+        }
+        else{
+            if(num_of_players > unionGroup.find(GroupID).getNumPlayers()){
+                return FAILURE;
+            }
+            unionGroup.find(GroupID).GetPlayersBound(score, num_of_players,LowerBoundPlayers,HigherBoundPlayers);
+        }
+        return SUCCESS;
+    }
     
-    void GetPlayersBound(int GroupID, int score, int num_of_players,
-                         int *LowerBoundPlayers, int *HigherBoundPlayers);
+    StatusType MergeGroups(int GroupID1, int GroupID2){
+        if(GroupID1 < 0 || GroupID1 > num_of_groups || GroupID2 < 0 || GroupID2 > num_of_groups){
+            return INVALID_INPUT;
+        }
+        int group_1 = unionGroup.find((GroupID1)).id;
+        int group_2 = unionGroup.find((GroupID2)).id;
+        unionGroup.unite(group_1,group_2);
+        return SUCCESS;
+    }
     
 };
 

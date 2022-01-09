@@ -1,10 +1,20 @@
 #include "LevelData.h"
 
 LevelData::LevelData(int level): level(level), num_of_players(0),
-                                level_sum(0), sub_tree_players(0), score_hist{0} {};
+                                level_sum(0), sub_tree_players(0){
+    for(int i = 0; i < HIST_SIZE; i++) {
+        score_hist[i] = 0;
+    }
+};
 
-LevelData::LevelData(Player& player): level(player.level), num_of_players(1),
-                                 level_sum(player.level), sub_tree_players(1), score_hist{0} {
+LevelData::LevelData(Player& player){
+    level = player.level;
+    num_of_players = 1;
+    level_sum = player.level;
+    sub_tree_players = 1;
+    for(int i = 0; i < HIST_SIZE; i++) {
+        score_hist[i] = 0;
+    }
     score_hist[player.score] = 1;
 };
 

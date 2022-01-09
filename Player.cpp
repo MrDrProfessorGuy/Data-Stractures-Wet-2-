@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(int id, int score, int level): id(id), score(score), level(level){};
+Player::Player(int PlayerID, int GroupID, int score): id(PlayerID), level(0), score(score), group_id(GroupID){};
 
 Player::~Player() {}
 

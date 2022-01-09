@@ -28,7 +28,7 @@ public:
     
     Group(int group_id);
     Group(const Group&) = delete;
-    ~Group();
+    ~Group() = default;
     
     bool merge(Group& group);
     
@@ -39,7 +39,7 @@ public:
     void setLevelTree(LevelTree& level_tree);
     void setLevelZero(LevelData& levelZero);
     void setPlayers(HashTable players);
-    
+    int getNumPlayers();
     void addPlayer(int player_id, int score, int level = 0);
     void removePlayer(int player_id);
     
@@ -47,11 +47,11 @@ public:
     void updatePlayerScore(int player_id, int new_score);
     void updatePlayerGroup(int player_id, int group_id);
     
-    double getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, int higherLevel, double * players);
+    double getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, int higherLevel);
     
-    void AverageHighestPlayerLevel(int num_of_players, double *level);
+    bool AverageHighestPlayerLevel(int num_of_players, double &level);
     
-    void GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayers, int *HigherBoundPlayers);
+    bool GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayers, int *HigherBoundPlayers);
     
     
 };

@@ -240,6 +240,87 @@ gtest/fast:
 	$(MAKE) $(MAKESILENT) -f googletest-main/googletest/CMakeFiles/gtest.dir/build.make googletest-main/googletest/CMakeFiles/gtest.dir/build
 .PHONY : gtest/fast
 
+Game.o: Game.cpp.o
+
+.PHONY : Game.o
+
+# target to build an object file
+Game.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.o
+.PHONY : Game.cpp.o
+
+Game.i: Game.cpp.i
+
+.PHONY : Game.i
+
+# target to preprocess a source file
+Game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.i
+.PHONY : Game.cpp.i
+
+Game.s: Game.cpp.s
+
+.PHONY : Game.s
+
+# target to generate assembly for a file
+Game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.s
+.PHONY : Game.cpp.s
+
+GameTest.o: GameTest.cpp.o
+
+.PHONY : GameTest.o
+
+# target to build an object file
+GameTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o
+.PHONY : GameTest.cpp.o
+
+GameTest.i: GameTest.cpp.i
+
+.PHONY : GameTest.i
+
+# target to preprocess a source file
+GameTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.i
+.PHONY : GameTest.cpp.i
+
+GameTest.s: GameTest.cpp.s
+
+.PHONY : GameTest.s
+
+# target to generate assembly for a file
+GameTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.s
+.PHONY : GameTest.cpp.s
+
+Group.o: Group.cpp.o
+
+.PHONY : Group.o
+
+# target to build an object file
+Group.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.o
+.PHONY : Group.cpp.o
+
+Group.i: Group.cpp.i
+
+.PHONY : Group.i
+
+# target to preprocess a source file
+Group.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.i
+.PHONY : Group.cpp.i
+
+Group.s: Group.cpp.s
+
+.PHONY : Group.s
+
+# target to generate assembly for a file
+Group.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.s
+.PHONY : Group.cpp.s
+
 HashTable.o: HashTable.cpp.o
 
 .PHONY : HashTable.o
@@ -321,33 +402,6 @@ Player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Player.cpp.s
 .PHONY : Player.cpp.s
 
-TreeTest.o: TreeTest.cpp.o
-
-.PHONY : TreeTest.o
-
-# target to build an object file
-TreeTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.o
-.PHONY : TreeTest.cpp.o
-
-TreeTest.i: TreeTest.cpp.i
-
-.PHONY : TreeTest.i
-
-# target to preprocess a source file
-TreeTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.i
-.PHONY : TreeTest.cpp.i
-
-TreeTest.s: TreeTest.cpp.s
-
-.PHONY : TreeTest.s
-
-# target to generate assembly for a file
-TreeTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/TreeTest.cpp.s
-.PHONY : TreeTest.cpp.s
-
 UnionFind.o: UnionFind.cpp.o
 
 .PHONY : UnionFind.o
@@ -375,6 +429,33 @@ UnionFind.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.s
 .PHONY : UnionFind.cpp.s
 
+library2.o: library2.cpp.o
+
+.PHONY : library2.o
+
+# target to build an object file
+library2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o
+.PHONY : library2.cpp.o
+
+library2.i: library2.cpp.i
+
+.PHONY : library2.i
+
+# target to preprocess a source file
+library2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.i
+.PHONY : library2.cpp.i
+
+library2.s: library2.cpp.s
+
+.PHONY : library2.s
+
+# target to generate assembly for a file
+library2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.s
+.PHONY : library2.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -392,6 +473,15 @@ help:
 	@echo "... gmock_main"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... Game.o"
+	@echo "... Game.i"
+	@echo "... Game.s"
+	@echo "... GameTest.o"
+	@echo "... GameTest.i"
+	@echo "... GameTest.s"
+	@echo "... Group.o"
+	@echo "... Group.i"
+	@echo "... Group.s"
 	@echo "... HashTable.o"
 	@echo "... HashTable.i"
 	@echo "... HashTable.s"
@@ -401,12 +491,12 @@ help:
 	@echo "... Player.o"
 	@echo "... Player.i"
 	@echo "... Player.s"
-	@echo "... TreeTest.o"
-	@echo "... TreeTest.i"
-	@echo "... TreeTest.s"
 	@echo "... UnionFind.o"
 	@echo "... UnionFind.i"
 	@echo "... UnionFind.s"
+	@echo "... library2.o"
+	@echo "... library2.i"
+	@echo "... library2.s"
 .PHONY : help
 
 

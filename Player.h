@@ -15,7 +15,7 @@ public:
     int score;
     int group_id;
     
-    Player(int id, int score, int level=0);
+    Player(int PlayerID, int GroupID, int score);
     Player(const Player&) = default;
     Player& operator=(const Player& player) = default;
     ~Player();

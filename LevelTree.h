@@ -9,17 +9,7 @@
 #include "LevelData.h"
 #include "exception"
 #include "iostream"
-
-
-
-typedef enum {
-    SUCCESS = 0,
-    FAILURE = -1,
-    ALLOCATION_ERROR = -2,
-    INVALID_INPUT = -3,
-    NODE_EXISTS = -4,
-    NODE_DONT_EXIST = -5
-} Status;
+#include "library2.h"
 
     
     
@@ -47,7 +37,7 @@ public:
         head = nullptr;
     }
     
-    Status merge(Iterator& tree1, Iterator& tree2, int combined_size){
+    StatusType merge(Iterator& tree1, Iterator& tree2, int combined_size){
         try{
             size = combined_size;
             if (combined_size > 0){
@@ -155,7 +145,22 @@ public:
         return iter->data;
     }
     
-    LevelData FuckTrees(Node node) const{
+    LevelData getExactLevelData(int level) const{
+        Node node = findNode(level);
+        if (node == nullptr){
+            return LevelData(0);
+        }
+        LevelData data = *(node)->data;
+        if (node->right != nullptr){
+            data -= *(node->right->data);
+        }
+        if (node->left != nullptr){
+            data -= *(node->left->data);
+        }
+        return data;
+    }
+    //Exact Level data;
+    LevelData getExactLevelData(Node node) const{
         if (node == nullptr){
             return LevelData(0);
         }
@@ -165,6 +170,17 @@ public:
         }
         if (node->left != nullptr){
             data -= *(node->left->data);
+        }
+        return data;
+    }
+    
+    LevelData FuckTrees2(Node node) const{
+        if (node == nullptr){
+            return LevelData(0);
+        }
+        LevelData data = LevelData(0);
+        if (node->right != nullptr){
+            data.mergeSubLevelData(*(node->right->data), true);
         }
         return data;
     }
@@ -219,28 +235,26 @@ public:
         }
         return Iterator(iter);
     }
-    LevelData getRank(const int key, bool ReturnNULL = false) const{
+    LevelData getRank(const int key, bool ReturnNULL = true) const{
         if (head == nullptr){
             return LevelData(key);
         }
         
         Node iter = this->head;
         LevelData rank(key);
-        if (iter != nullptr){
-            rank = LevelData(*iter->data);
-        }
+        rank = LevelData(*iter->data);
         LevelData last_right_rank(rank);
         while(iter != nullptr && *(iter->key) != key){
             if(key < *(iter->key)){
-                //rank += *(iter->data);
                 if (iter->right != nullptr){
                     rank -= *(iter->right->data);
-                    rank -= FuckTrees(iter);
+                    rank -= getExactLevelData(iter);
                 }
                 iter = iter->left;
             }
             else{
                 last_right_rank = rank;
+                last_right_rank -= FuckTrees2(iter);
                 iter = iter->right;
             }
         }
@@ -251,11 +265,11 @@ public:
             }
             return LevelData(key);
         }
-        //rank += *(iter->data);
-        return rank;
+        
+        return (rank - FuckTrees2(iter));
     }
 
-    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = false) const{
+    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
         if (head == nullptr){
             return LevelData(key);
         }
@@ -270,11 +284,13 @@ public:
                 //rank += dataFunc(*(iter)->data);
                 if (iter->right != nullptr){
                     rank -= dataFunc(*(iter->right)->data);
+                    rank -= getExactLevelData(iter);
                 }
                 iter = iter->left;
             }
             else{
                 last_right_rank = rank;
+                last_right_rank -= FuckTrees2(iter);
                 iter = iter->right;
             }
         }
@@ -285,7 +301,7 @@ public:
             }
             return LevelData(key);
         }
-        return rank;
+        return (rank - FuckTrees2(iter));
     }
     bool exists(const int& key) const{
         if (find(key) == nullptr){
@@ -294,9 +310,14 @@ public:
         return true;
     }
     
+    LevelData* insertPlayer(Player player){
+        LevelData data(player);
+        return insert(player.level, data);
+    }
+    
     //O(Log(size))
     LevelData* insert(int key, LevelData data){ // update trees' info
-        Status status = FAILURE;
+        StatusType status = FAILURE;
         Node new_node = new AVL_Node<int,LevelData>(key, data);
         Node node = nullptr;
         
@@ -317,9 +338,28 @@ public:
         }
         return new_node->data;
     }
-    Status removeNode(int key){
+    
+    StatusType removePlayer(Player player){
+        LevelData data(player);
+        StatusType status = FAILURE;
+        
+        if (size == 1 && data.getLevel() == *(head->key)){
+            delete head;
+            head = nullptr;
+            status = SUCCESS;
+        }
+        else{
+            removeNodeAux(this->head, data.getLevel(), data, status);
+        }
+    
+        if (status == SUCCESS){
+            size--;
+        }
+        return status;
+    }
+    StatusType removeNode(int key){
         //not_finished + update trees' info
-        Status status = FAILURE;
+        StatusType status = FAILURE;
         if (size == 1 && key == *(head->key)){
             delete head;
             head = nullptr;
@@ -406,7 +446,6 @@ public:
         
         Node root;
     public:
-        friend Iterator& sum(Iterator& iter1, Iterator& iter2);
         explicit Iterator(Node node):root(node){}
         Iterator(const Iterator&) = default;
         ~Iterator() = default;
@@ -483,6 +522,31 @@ private:
         }
         delete root;
         root = nullptr;
+    }
+    Node findNode(const int key, bool ReturnNULL = true) const{
+        if (head == nullptr){
+            return smallest(head);
+        }
+        Node iter = this->head;
+        Node last_right = nullptr;
+        while(iter != nullptr && *(iter->key) != key)
+        {
+            if(key < *(iter->key)){
+                iter = iter->left;
+            }
+            else{
+                last_right = iter;
+                iter = iter->right;
+            }
+        }
+        
+        if (iter == nullptr){
+            if (ReturnNULL == false){
+                return (last_right);
+            }
+            return smallest(head);
+        }
+        return (iter);
     }
     
     Iterator nextInMerge(Iterator& iter1, Iterator& iter2){
@@ -593,7 +657,7 @@ private:
     }
     
     // O(Log(size))
-    Node insertNodeAux(Node root, Node new_node, Status& status){
+    Node insertNodeAux(Node root, Node new_node, StatusType & status){
         Node node = nullptr;
         (*root->data).mergeSubLevelData(*(new_node->data), true);
         if(*new_node < *root){
@@ -617,7 +681,7 @@ private:
             }
         }
         else{
-            status = NODE_EXISTS;
+            status = INVALID_INPUT;
             node = root;
             int new_num_players = node->data->numOfPlayers() + new_node->data->numOfPlayers();
             node->data->setNumOfPlayers(new_num_players);
@@ -630,10 +694,10 @@ private:
         return node;
     }
     
-    void removeNodeAux(Node root, int key, LevelData& data, Status & status){
+    void removeNodeAux(Node root, int key, LevelData& data, StatusType & status){
         if (root == nullptr)
         {
-            status = NODE_DONT_EXIST;
+            status = FAILURE;
             return;
         }
         (*root->data).mergeSubLevelData(data, false);
@@ -644,7 +708,7 @@ private:
             removeNodeAux(root->right, key, data, status);
         }
         else{
-            if ((*root->data).numOfPlayers() == 0){
+            if (getExactLevelData(root).getSubPlayers() == 0){
                 remove_tree_node(root);
             }
             status = SUCCESS;
