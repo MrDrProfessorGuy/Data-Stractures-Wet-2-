@@ -10,7 +10,6 @@
 class LevelData {
 private:
     int level;
-    int num_of_players;
     int level_sum;
     int sub_tree_players;
     int score_hist[HIST_SIZE];
@@ -28,15 +27,13 @@ public:
         if (increase){
             sign = 1;
         }
-        level_sum += sign* (data.num_of_players * data.level);
-        sub_tree_players += sign* data.num_of_players;
+        sub_tree_players += sign* data.sub_tree_players;
         for(int i = 0; i < HIST_SIZE; i++) {
             score_hist[i] += sign* data.score_hist[i];
         }
     }
     
-    int getLevel();
-    int numOfPlayers();
+    int getLevel() const;
     int getLevelSum();
     int getSubPlayers();
     int* getScoreHist();

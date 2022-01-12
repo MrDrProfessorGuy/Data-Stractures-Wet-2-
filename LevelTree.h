@@ -112,13 +112,13 @@ public:
     Iterator root(){
         return Iterator(head);
     }
-    Iterator firstInOrder(Node node = nullptr){
+    Iterator firstInOrder(Node node = nullptr) const{
         if (node == nullptr){
             node = head;
         }
         return Iterator(smallest(node));
     }
-    Iterator lastInOrder(Node node = nullptr){
+    Iterator lastInOrder(Node node = nullptr) const{
         if(node == nullptr){
             node = head;
         }
@@ -160,7 +160,7 @@ public:
         return data;
     }
     //Exact Level data;
-    LevelData getExactLevelData(Node node) const{
+    LevelData ExactLevelData(Node node) const{
         if (node == nullptr){
             return LevelData(0);
         }
@@ -174,11 +174,11 @@ public:
         return data;
     }
     
-    LevelData FuckTrees2(Node node) const{
+    LevelData NodeRightRank(Node node) const{
         if (node == nullptr){
             return LevelData(0);
         }
-        LevelData data = LevelData(0);
+        LevelData data = LevelData(*(node->key));
         if (node->right != nullptr){
             data.mergeSubLevelData(*(node->right->data), true);
         }
@@ -203,7 +203,7 @@ public:
         }
         
         if (iter == nullptr){
-            if (ReturnNULL == false){
+            if (ReturnNULL == false && last_right != nullptr){
                 return last_right->data;
             }
             return nullptr;
@@ -235,26 +235,103 @@ public:
         }
         return Iterator(iter);
     }
-    LevelData getRank(const int key, bool ReturnNULL = true) const{
+    LevelData getRank(const int key, bool ReturnNULL = false) const{
+        LevelData* data = find(key, false);
+        if (ReturnNULL){
+            data = find(key, true);
+        }
+        
+        if (data == nullptr){
+            return LevelData(INVALID_LEVEL);
+        }
+        return getRank3(data->getLevel());
+    }
+    LevelData getRank3(const int key, bool ReturnNULL = false) const{
         if (head == nullptr){
             return LevelData(key);
         }
+        Node iter = this->head;
+        LevelData rank(*(iter->data));
         
+        while(iter != nullptr && *(iter->key) != key){
+            if(*(iter->key) < key){
+                iter = iter->right;
+            }
+            else{
+                rank.setLevel(*(iter->key));
+                rank = rank - NodeRightRank(iter) - ExactLevelData(iter);
+                iter = iter->left;
+                
+            }
+        }
+        
+        if (iter == nullptr){
+            return LevelData(key);
+        }
+        rank = rank - NodeRightRank(iter);
+        rank.setLevel(*(iter->key));
+        return (rank);
+    }
+    LevelData getRank2(const int key, bool ReturnNULL = false) const{
+        if (head == nullptr){
+            return LevelData(key);
+        }
+        bool turned_left = false;
+        bool turned_right = false;
+        Node iter = this->head;
+        LevelData rank(*(iter->data));
+        LevelData rankSup = rank;
+        rankSup.setLevel((*firstInOrder(head))->getLevel());
+        
+        while(iter != nullptr && *(iter->key) != key){
+            if(key < *(iter->key)){
+                rank.setLevel(*(iter->key));
+                rank = rank - NodeRightRank(iter) - ExactLevelData(iter);
+                iter = iter->left;
+            }
+            else{
+                if (rankSup.getLevel() < rank.getLevel()){
+                    rankSup = rank - NodeRightRank(iter);
+                    rankSup.setLevel(*(iter->key));
+                }
+                iter = iter->right;
+            }
+        }
+        
+        if (iter == nullptr){
+            if (ReturnNULL == false){
+                return rankSup;
+            }
+            return LevelData(key);
+        }
+        rank = rank - NodeRightRank(iter);
+        rank.setLevel(*(iter->key));
+        return (rank);
+    }
+    LevelData getRankOLD(const int key, bool ReturnNULL = true) const{
+        if (head == nullptr){
+            return LevelData(key);
+        }
+        bool turned_left = false;
         Node iter = this->head;
         LevelData rank(key);
         rank = LevelData(*iter->data);
-        LevelData last_right_rank(rank);
+        LevelData last_right_rank = rank;
+        //last_right_rank -= FuckTrees2(iter);
+        
         while(iter != nullptr && *(iter->key) != key){
             if(key < *(iter->key)){
-                if (iter->right != nullptr){
-                    rank -= *(iter->right->data);
-                    rank -= getExactLevelData(iter);
-                }
+                rank -= ExactLevelData(iter) - NodeRightRank(iter);
+                rank.setLevel(iter->data->getLevel());
                 iter = iter->left;
+                turned_left = true;
             }
             else{
-                last_right_rank = rank;
-                last_right_rank -= FuckTrees2(iter);
+                if (!turned_left){
+                    last_right_rank = rank;
+                    last_right_rank -= NodeRightRank(iter);
+                    last_right_rank.setLevel(iter->data->getLevel());
+                }
                 iter = iter->right;
             }
         }
@@ -265,32 +342,75 @@ public:
             }
             return LevelData(key);
         }
+
+        rank = rank - NodeRightRank(iter);
+        rank.setLevel(iter->data->getLevel());
+        return (rank);
+    }
+    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
+        if (head == nullptr){
+            return LevelData(INVALID_LEVEL);
+        }
+        Node iter = this->head;
+        Node last_right = nullptr;
+        LevelData rank = *(iter->data) - NodeRightRank(iter);
+        LevelData last_right_rank(INVALID_LEVEL);
         
-        return (rank - FuckTrees2(iter));
+        while(iter != nullptr && dataFunc(rank) != key){
+            if(key < dataFunc(rank)){
+                rank = rank - ExactLevelData(iter);
+                if (iter->left != nullptr){
+                    rank = rank - NodeRightRank(iter->left);
+                    rank.setLevel(*(iter->left->key));
+                }
+                iter = iter->left;
+            }
+            else{
+                last_right = iter;
+                last_right_rank = rank;
+                last_right_rank.setLevel(*(iter->key));
+                
+                if (iter->right != nullptr){
+                    rank = rank + *(iter->right->data) - NodeRightRank(iter->right);
+                    rank.setLevel(*(iter->right->key));
+                }
+                iter = iter->right;
+            }
+        }
+    
+        if (iter == nullptr){
+            if (ReturnNULL == false){
+                return last_right_rank;
+            }
+            return LevelData(INVALID_LEVEL);
+        }
+        rank.setLevel(*(iter->key));
+        return rank;
     }
 
-    LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
+    LevelData getLevelDataRank3(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
         if (head == nullptr){
             return LevelData(key);
         }
         Node iter = this->head;
-        LevelData rank(key);
-        if (iter != nullptr){
-            rank = LevelData(*iter->data);
-        }
-        LevelData last_right_rank(rank);
-        while(iter != nullptr && dataFunc(*(iter)->data) != key){
-            if(key < dataFunc(*(iter)->data)){
-                //rank += dataFunc(*(iter)->data);
+        LevelData rank = getRank(*(iter->key));
+        //rank = LevelData(*iter->data);
+        LevelData last_right_rank(INVALID_LEVEL);
+        
+        
+        while(iter != nullptr && dataFunc(rank) != key){
+            if(key < dataFunc(rank)){
                 if (iter->right != nullptr){
-                    rank -= dataFunc(*(iter->right)->data);
-                    rank -= getExactLevelData(iter);
+                    rank -= (*(iter->right)->data);
                 }
+                rank -= ExactLevelData(iter);
+                rank.setLevel(iter->data->getLevel());
                 iter = iter->left;
             }
             else{
                 last_right_rank = rank;
-                last_right_rank -= FuckTrees2(iter);
+                last_right_rank -= NodeRightRank(iter);
+                last_right_rank.setLevel(iter->data->getLevel());
                 iter = iter->right;
             }
         }
@@ -301,7 +421,11 @@ public:
             }
             return LevelData(key);
         }
-        return (rank - FuckTrees2(iter));
+        if (iter != head){
+            rank = rank - NodeRightRank(iter);
+        }
+        rank.setLevel(iter->data->getLevel());
+        return (rank);
     }
     bool exists(const int& key) const{
         if (find(key) == nullptr){
@@ -343,14 +467,9 @@ public:
         LevelData data(player);
         StatusType status = FAILURE;
         
-        if (size == 1 && data.getLevel() == *(head->key)){
-            delete head;
-            head = nullptr;
-            status = SUCCESS;
-        }
-        else{
-            removeNodeAux(this->head, data.getLevel(), data, status);
-        }
+
+        removeNodeAux(this->head, data.getLevel(), data, status);
+
     
         if (status == SUCCESS){
             size--;
@@ -683,8 +802,6 @@ private:
         else{
             status = INVALID_INPUT;
             node = root;
-            int new_num_players = node->data->numOfPlayers() + new_node->data->numOfPlayers();
-            node->data->setNumOfPlayers(new_num_players);
         }
         
         if (status == SUCCESS){
@@ -708,10 +825,10 @@ private:
             removeNodeAux(root->right, key, data, status);
         }
         else{
-            if (getExactLevelData(root).getSubPlayers() == 0){
+            if (ExactLevelData(root).getSubPlayers() == 0){
                 remove_tree_node(root);
+                status = SUCCESS;
             }
-            status = SUCCESS;
         }
         
         if (status == SUCCESS && root != nullptr){
@@ -720,19 +837,23 @@ private:
         }
     }    //Node find(Node root ,Node node);
     
-    static void swapNodeData(Node node1, Node node2){
+    void swapNodeData(Node node1, Node node2){
         if (node1 == nullptr || node2 == nullptr){
             return;
         }
-        int tmp_level = (*node1->data).getLevel();
-        int tmp_NOP = (*node1->data).numOfPlayers();
+        int node1_level = (*node1->data).getLevel();
         int node2_level = node2->data->getLevel();
+        LevelData node1Exact = ExactLevelData(node1);
+        LevelData node2Exact = ExactLevelData(node2);
+    
+       // *(node1->data) = *(node1->data) - node1Exact + node2Exact;
         node1->setKey(node2_level);
         (*node1->data).setLevel((*node2->data).getLevel());
-        (*node1->data).setNumOfPlayers((*node2->data).numOfPlayers());
-        (*node2->data).setLevel(tmp_level);
-        (*node2->data).setNumOfPlayers(tmp_NOP);
-        node2->setKey(tmp_level);
+    
+        //*(node2->data) = *(node2->data) - node2Exact + node1Exact;
+        node2->setKey(node1_level);
+        (*node2->data).setLevel(node1_level);
+        
     }
     
     void remove_tree_node(Node& root){

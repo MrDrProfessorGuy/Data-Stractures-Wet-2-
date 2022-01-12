@@ -21,20 +21,23 @@ int Group::getNumPlayers(){
     return players.curr_amount;
 }
 
-void Group::addPlayer(int player_id, int score, int level){
+void Group::addPlayer(int player_id,int  GroupID , int score){
     if (players.exists(player_id)){
         return;
     }
     
-    Player new_player(player_id, score, level);
+    Player new_player(player_id, GroupID, score);
     players.insert(new_player);
     
-    if (level == -1){
-        levelZero.addNewData(new_player);
+    level_tree.insertPlayer(new_player);
+}
+void Group::addPlayer(Player player){
+    if (players.exists(player.id)){
+        return;
     }
-    else{
-        level_tree.insertPlayer(new_player);
-    }
+    
+    players.insert(player);
+    level_tree.insertPlayer(player);
 }
 void Group::removePlayer(int player_id){
     Player* player = players.findPlayer(player_id);
@@ -63,7 +66,7 @@ void Group::updatePlayerScore(int player_id, int amount){
     }
     
     level_tree.removePlayer(*player);
-    player->increaseScore(amount);
+    player->setScore(amount);
     level_tree.insertPlayer(*player);
 }
 void Group::updatePlayerGroup(int player_id, int group_id){
@@ -100,6 +103,10 @@ bool Group::merge(Group& group){
 int dataFunc(LevelData& data){
     return data.getSubPlayers();
 }
+int byLevel(LevelData& data){
+    return data.getLevel();
+}
+
 
 LevelData Group::getRank(int level, bool& levelFound){
     LevelData level_rank(level);
@@ -112,24 +119,28 @@ LevelData Group::getRank(int level, bool& levelFound){
         if (!level_tree.exists(level)){
             levelFound = false;
         }
-        return (level_tree.getRank(level,false));
+        LevelData data = (level_tree.getRank(level, false));
+        //data.setLevel(level);
+        return data;
     }
 
 }
+
 bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &quotient){
-    LevelData *level_data;
-    
+    Remainder = LevelData(INVALID_LEVEL);
     LevelData higher_bound = getGroupRank();
     if(higher_bound == LevelData(INVALID_LEVEL)){
         return false;//Failure
     }
-
+    
     int total_players = higher_bound.getSubPlayers();
     if(num_of_players > total_players){
         return false;//Failure
     }
     else if(num_of_players == total_players){
         quotient = higher_bound;
+        quotient.setLevel(higher_bound.getLevel());
+        return true;
     }
     
     int target_num_players = total_players - num_of_players;
@@ -138,24 +149,34 @@ bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelDa
         quotient = higher_bound - lower_bound;
     }
     else{
-        LevelTree::Iterator remainder_iter = level_tree.findIter(Remainder.getLevel());
-        remainder_iter++;
+        LevelTree::Iterator remainder_iter = level_tree.findIter(lower_bound.getLevel());
+        if (lower_bound.getLevel() >= 0){
+            remainder_iter++;
+        }
+        bool found;
+        LevelData iterRank = getRank((*remainder_iter)->getLevel(), found);
         
-        quotient = *(*remainder_iter) - higher_bound;
-        Remainder = lower_bound - *(*remainder_iter);
+        quotient = higher_bound - lower_bound;
+        Remainder = iterRank - lower_bound;
+        Remainder.setLevel(iterRank.getLevel());
     }
+    quotient.setLevel(higher_bound.getLevel());
+    
     return true;//Success
 }
 
 
 double Group::getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, int higherLevel){
     bool level_found = true;
-    LevelData lower_rank = getRank(lowerLevel, level_found);
+    LevelData lower_rank = getRank(lowerLevel-1, level_found);
     LevelData higher_rank = getRank(higherLevel, level_found);
     
     double players_with_score = higher_rank.getScoreHist()[score] - lower_rank.getScoreHist()[score];
     double total_players = higher_rank.getSubPlayers() - lower_rank.getSubPlayers();
-    return (players_with_score/total_players);
+    if (total_players == 0){
+        return 0.0;
+    }
+    return (players_with_score/total_players)*100.0;
 }
 
 bool Group::AverageHighestPlayerLevel(int num_of_players, double &level){
@@ -164,7 +185,10 @@ bool Group::AverageHighestPlayerLevel(int num_of_players, double &level){
     if (!getTopPlayersStats(num_of_players, remainder, quotient)){
         return false;
     }
-    double level_sum = quotient.getLevelSum() + remainder.getLevelSum();
+
+    int remaining_players = num_of_players - quotient.getSubPlayers();
+
+    double level_sum = quotient.getLevelSum() + remaining_players*remainder.getLevel();
     level = level_sum/num_of_players;
     return true;
 }
@@ -177,13 +201,17 @@ bool Group::GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayer
         return false;
     }
     *LowerBoundPlayers = quotient.getScoreHist()[score];
-    int score_remainder = remainder.getScoreHist()[score];
+    int max_remainder = remainder.getScoreHist()[score];
     int remaining_players = num_of_players - quotient.getSubPlayers();
-    if (remaining_players < score_remainder){
-        score_remainder = remaining_players;
+    int min_remainder = 0;
+    if (remaining_players > 0 && remaining_players > remainder.getSubPlayers() - max_remainder){
+        min_remainder = remaining_players - remainder.getSubPlayers() - max_remainder;
     }
-    *HigherBoundPlayers = *LowerBoundPlayers;
-    *LowerBoundPlayers = *LowerBoundPlayers + score_remainder;
+    if (remaining_players > 0 && remaining_players < max_remainder){
+        max_remainder = remaining_players;
+    }
+    *HigherBoundPlayers = *LowerBoundPlayers + max_remainder;
+    *LowerBoundPlayers = *LowerBoundPlayers + min_remainder;
     return true;
 }
 
@@ -207,12 +235,10 @@ LevelData Group::getLevelData(int level){
 
 LevelData Group::getGroupRank(){
     if (*level_tree.root() == nullptr){
-        if (levelZero.numOfPlayers() > 0){
-            return levelZero;
-        }
         return LevelData(INVALID_LEVEL);
     }
     else{
-        return getLevelData((*level_tree.root())->getLevel());
+        bool found;
+        return getRank((*(level_tree.lastInOrder()).getKey()), found);
     }
 }

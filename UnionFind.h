@@ -35,7 +35,7 @@ class UnionFind{
                 parent[current_group] = root_id;
             }
             counter++;
-            //assert(counter < size+1);
+            assert(counter < size+1);
         }
         return current_group;
     }
@@ -76,7 +76,7 @@ public:
     }
     
     void unite(int group1_id, int group2_id){
-        if (group1_id == group2_id){
+        if (groupRoot(group1_id) == groupRoot(group2_id)){
             return;
         }
         Group& group1 = find(group1_id);
@@ -89,6 +89,7 @@ public:
         }
         else{
             merge(group2, group1, group2_id, group1_id);
+            group2.id = group1_id;
         }
     }
 

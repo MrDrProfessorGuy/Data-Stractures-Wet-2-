@@ -36,8 +36,8 @@ public:
         if (gameGroup.players.exists(PlayerID)){
             return FAILURE;
         }
-        gameGroup.addPlayer(PlayerID, score);
-        unionGroup.find(GroupID).addPlayer(PlayerID, score);
+        gameGroup.addPlayer(PlayerID, GroupID, score);
+        unionGroup.find(GroupID).addPlayer(PlayerID, GroupID, score);
         return SUCCESS;
     }
     
@@ -49,9 +49,9 @@ public:
         if (gameGroup.players.exists(player.id)){
             return FAILURE;
         }
-        gameGroup.addPlayer(player.id, player.score);
         
-        unionGroup.find(player.group_id).addPlayer(player.id, player.score);
+        gameGroup.addPlayer(player);
+        unionGroup.find(player.group_id).addPlayer(player);
         return SUCCESS;
     }
     
@@ -105,6 +105,10 @@ public:
         if(players == nullptr || GroupID < 0 || GroupID > num_of_groups){
             return INVALID_INPUT;
         }
+        if (score < 0 || score > scale){
+            *players = 0.0;
+            return SUCCESS;
+        }
         
         if(GroupID == 0){
             *players = gameGroup.getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
@@ -117,7 +121,7 @@ public:
     }
     
     StatusType AverageHighestPlayerLevelByGroup(int GroupID, int num_of_players, double *level) {
-        if (level == nullptr || GroupID < 0 || GroupID > num_of_groups) {
+        if (level == nullptr || GroupID < 0 || GroupID > num_of_groups || num_of_players <= 0) {
             return INVALID_INPUT;
         }
        
@@ -137,7 +141,7 @@ public:
     }
     StatusType GetPlayersBound(int GroupID, int score, int num_of_players, int *LowerBoundPlayers, int *HigherBoundPlayers){
         if(LowerBoundPlayers == nullptr || HigherBoundPlayers == nullptr || GroupID < 0 || GroupID > num_of_groups
-                                        || score <= 0 || score > scale){
+                                        || score <= 0 || score > scale || num_of_players < 0){
             return INVALID_INPUT;
         }
         if(GroupID == 0){
@@ -156,7 +160,7 @@ public:
     }
     
     StatusType MergeGroups(int GroupID1, int GroupID2){
-        if(GroupID1 < 0 || GroupID1 > num_of_groups || GroupID2 < 0 || GroupID2 > num_of_groups){
+        if(GroupID1 <= 0 || GroupID1 > num_of_groups || GroupID2 <= 0 || GroupID2 > num_of_groups){
             return INVALID_INPUT;
         }
         int group_1 = unionGroup.find((GroupID1)).id;

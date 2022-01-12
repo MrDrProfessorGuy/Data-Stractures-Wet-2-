@@ -13,39 +13,6 @@ CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.o: ../UnionFind.h
 CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.o: ../library2.h
 CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.o: ../sortedList.h
 
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-death-test.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-matchers.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-message.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-param-test.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-printers.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-test-part.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest-typed-test.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest_pred_impl.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest_prod.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/custom/gtest-port.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/custom/gtest-printers.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-death-test-internal.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-filepath.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-internal.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-param-util.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-port-arch.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-port.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-string.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/internal/gtest-type-util.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../AVL_Node.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../Game.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../GameTest.cpp
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../Group.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../HashTable.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../LevelData.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../LevelTree.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../Player.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../UnionFind.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../googletest-main/googletest/include/gtest/gtest.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../library2.h
-CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o: ../sortedList.h
-
 CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.o: ../AVL_Node.h
 CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.o: ../Group.cpp
 CMakeFiles/Data_Stractures_Wet_2.dir/Group.cpp.o: ../Group.h
@@ -78,4 +45,19 @@ CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.o: ../UnionFind.cpp
 CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.o: ../UnionFind.h
 CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.o: ../library2.h
 CMakeFiles/Data_Stractures_Wet_2.dir/UnionFind.cpp.o: ../sortedList.h
+
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../AVL_Node.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../Game.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../Group.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../HashTable.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../LevelData.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../LevelTree.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../Player.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../UnionFind.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../library2.cpp
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../library2.h
+CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.o: ../sortedList.h
+
+CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.o: ../library2.h
+CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.o: ../main2.cpp
 

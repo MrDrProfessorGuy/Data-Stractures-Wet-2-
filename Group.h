@@ -41,6 +41,7 @@ public:
     void setPlayers(HashTable players);
     int getNumPlayers();
     void addPlayer(int player_id, int score, int level = 0);
+    void addPlayer(Player player);
     void removePlayer(int player_id);
     
     void updatePlayerLevel(int player_id, int new_level);

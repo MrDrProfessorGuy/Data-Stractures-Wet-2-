@@ -366,9 +366,6 @@
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Game.h">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
-		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/GameTest.cpp">
-			<Option target="Data_Stractures_Wet_2"/>
-		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.cpp">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
@@ -421,6 +418,9 @@
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/library2.h">
+			<Option target="Data_Stractures_Wet_2"/>
+		</Unit>
+		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/main2.cpp">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/CMakeLists.txt">

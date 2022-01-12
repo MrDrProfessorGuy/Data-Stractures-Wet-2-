@@ -267,33 +267,6 @@ Game.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/Game.cpp.s
 .PHONY : Game.cpp.s
 
-GameTest.o: GameTest.cpp.o
-
-.PHONY : GameTest.o
-
-# target to build an object file
-GameTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.o
-.PHONY : GameTest.cpp.o
-
-GameTest.i: GameTest.cpp.i
-
-.PHONY : GameTest.i
-
-# target to preprocess a source file
-GameTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.i
-.PHONY : GameTest.cpp.i
-
-GameTest.s: GameTest.cpp.s
-
-.PHONY : GameTest.s
-
-# target to generate assembly for a file
-GameTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/GameTest.cpp.s
-.PHONY : GameTest.cpp.s
-
 Group.o: Group.cpp.o
 
 .PHONY : Group.o
@@ -456,6 +429,33 @@ library2.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/library2.cpp.s
 .PHONY : library2.cpp.s
 
+main2.o: main2.cpp.o
+
+.PHONY : main2.o
+
+# target to build an object file
+main2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.o
+.PHONY : main2.cpp.o
+
+main2.i: main2.cpp.i
+
+.PHONY : main2.i
+
+# target to preprocess a source file
+main2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.i
+.PHONY : main2.cpp.i
+
+main2.s: main2.cpp.s
+
+.PHONY : main2.s
+
+# target to generate assembly for a file
+main2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Data_Stractures_Wet_2.dir/build.make CMakeFiles/Data_Stractures_Wet_2.dir/main2.cpp.s
+.PHONY : main2.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -476,9 +476,6 @@ help:
 	@echo "... Game.o"
 	@echo "... Game.i"
 	@echo "... Game.s"
-	@echo "... GameTest.o"
-	@echo "... GameTest.i"
-	@echo "... GameTest.s"
 	@echo "... Group.o"
 	@echo "... Group.i"
 	@echo "... Group.s"
@@ -497,6 +494,9 @@ help:
 	@echo "... library2.o"
 	@echo "... library2.i"
 	@echo "... library2.s"
+	@echo "... main2.o"
+	@echo "... main2.i"
+	@echo "... main2.s"
 .PHONY : help
 
 

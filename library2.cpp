@@ -76,8 +76,9 @@ StatusType GetPlayersBound(void *DS, int GroupID, int score, int m,
 }
 
 void Quit(void** DS){
-    delete DS;
-    DS = nullptr;
+    Game** game = (Game**)DS;
+    delete *game;
+    *DS = nullptr;
 }
 
 
