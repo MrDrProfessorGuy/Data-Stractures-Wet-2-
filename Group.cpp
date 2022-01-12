@@ -174,8 +174,9 @@ double Group::getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, in
     double players_with_score = higher_rank.getScoreHist()[score] - lower_rank.getScoreHist()[score];
     double total_players = higher_rank.getSubPlayers() - lower_rank.getSubPlayers();
     if (total_players == 0){
-        return 0.0;
+        return FAILURE;
     }
+    int test = (players_with_score/total_players)*100.0;
     return (players_with_score/total_players)*100.0;
 }
 
@@ -200,18 +201,22 @@ bool Group::GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayer
     if (!getTopPlayersStats(num_of_players, remainder, quotient)){
         return false;
     }
-    *LowerBoundPlayers = quotient.getScoreHist()[score];
-    int max_remainder = remainder.getScoreHist()[score];
-    int remaining_players = num_of_players - quotient.getSubPlayers();
+    
+    int max_remainder = 0;
     int min_remainder = 0;
-    if (remaining_players > 0 && remaining_players > remainder.getSubPlayers() - max_remainder){
-        min_remainder = remaining_players - remainder.getSubPlayers() - max_remainder;
-    }
-    if (remaining_players > 0 && remaining_players < max_remainder){
+    int remaining_players = num_of_players - quotient.getSubPlayers();
+    if (remaining_players > 0){
         max_remainder = remaining_players;
+        if (remainder.getScoreHist()[score] < remaining_players){
+            max_remainder = remainder.getScoreHist()[score];
+        }
+        if (remaining_players > remainder.getSubPlayers() - remainder.getScoreHist()[score]){
+            min_remainder = remaining_players - remainder.getSubPlayers() - remainder.getScoreHist()[score];
+        }
     }
-    *HigherBoundPlayers = *LowerBoundPlayers + max_remainder;
-    *LowerBoundPlayers = *LowerBoundPlayers + min_remainder;
+    
+    *HigherBoundPlayers = quotient.getScoreHist()[score] + max_remainder;
+    *LowerBoundPlayers = quotient.getScoreHist()[score] + min_remainder;
     return true;
 }
 

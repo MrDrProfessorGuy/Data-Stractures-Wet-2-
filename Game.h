@@ -107,7 +107,7 @@ public:
         }
         if (score < 0 || score > scale){
             *players = 0.0;
-            return SUCCESS;
+            return FAILURE;
         }
         
         if(GroupID == 0){
@@ -115,6 +115,9 @@ public:
         }
         else{
            *players = unionGroup.find(GroupID).getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
+        }
+        if (*players == FAILURE){
+            return FAILURE;
         }
         //when Allocation Error?
         return SUCCESS;

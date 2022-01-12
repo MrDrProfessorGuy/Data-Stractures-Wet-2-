@@ -6,55 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/AVL_Node.h
-memory
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/memory
-cmath
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/cmath
+/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.cpp
+LevelData.h
+/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h
 assert.h
 /Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/assert.h
 
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.cpp
-Group.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.h
-
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Group.h
-LevelTree.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelTree.h
-LevelData.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h
-HashTable.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTable.h
-
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/HashTable.h
-Player.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.h
-sortedList.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/sortedList.h
-
 /Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h
 Player.h
 /Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.h
 
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelTree.h
-AVL_Node.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/AVL_Node.h
-LevelData.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h
-exception
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/exception
-iostream
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/iostream
-library2.h
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/library2.h
-
 /Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/Player.h
-
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/library2.h
-
-/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/sortedList.h
-stdexcept
--
-new
--
 

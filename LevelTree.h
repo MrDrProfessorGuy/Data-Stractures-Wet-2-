@@ -180,7 +180,7 @@ public:
         }
         LevelData data = LevelData(*(node->key));
         if (node->right != nullptr){
-            data.mergeSubLevelData(*(node->right->data), true);
+            data += *(node->right->data);
         }
         return data;
     }
@@ -778,7 +778,7 @@ private:
     // O(Log(size))
     Node insertNodeAux(Node root, Node new_node, StatusType & status){
         Node node = nullptr;
-        (*root->data).mergeSubLevelData(*(new_node->data), true);
+        (*root->data) += *(new_node->data);
         if(*new_node < *root){
             if (root->left == nullptr){
                 root->setLeft(new_node);
@@ -812,12 +812,11 @@ private:
     }
     
     void removeNodeAux(Node root, int key, LevelData& data, StatusType & status){
-        if (root == nullptr)
-        {
+        if (root == nullptr){
             status = FAILURE;
             return;
         }
-        (*root->data).mergeSubLevelData(data, false);
+        (*root->data) -= data;
         if(key < *(root->key)){
             removeNodeAux(root->left, key, data, status);
         }
@@ -841,26 +840,22 @@ private:
         if (node1 == nullptr || node2 == nullptr){
             return;
         }
-        int node1_level = (*node1->data).getLevel();
-        int node2_level = node2->data->getLevel();
+        int node1_level = (*node1->key);
+        int node2_level = *(node2->key);
         LevelData node1Exact = ExactLevelData(node1);
         LevelData node2Exact = ExactLevelData(node2);
     
-       // *(node1->data) = *(node1->data) - node1Exact + node2Exact;
         node1->setKey(node2_level);
         (*node1->data).setLevel((*node2->data).getLevel());
     
-        //*(node2->data) = *(node2->data) - node2Exact + node1Exact;
         node2->setKey(node1_level);
         (*node2->data).setLevel(node1_level);
-        
     }
     
     void remove_tree_node(Node& root){
         // if root has 2 sub trees
         if(root->left != nullptr && root->right != nullptr) {
             Node next_order = smallest(root->right);
-            
             LevelTree::swapNodeData(root, next_order);
             if (next_order->right != nullptr) {
                 LevelTree::swapNodeData(next_order->right, next_order);
@@ -943,12 +938,12 @@ private:
         Node A = B->left;
     
         LevelData tmp = *(B->data);
-        (B->data)->mergeSubLevelData(*(A->data), false);
+        *(B->data) -= *(A->data);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->left = A->right;
         if(A->right != nullptr) {
-            (B->data)->mergeSubLevelData(*(A->right)->data, true);
+            *(B->data) += *((A->right)->data);
             A->right->parent = B;
         }
         
@@ -984,12 +979,12 @@ private:
         Node A = B->right;
         
         LevelData tmp = *(B->data);
-        (B->data)->mergeSubLevelData(*(A->data), false);
+        *(B->data) -= *(A->data);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->right = A->left;
         if(A->left != nullptr){
-            (B->data)->mergeSubLevelData(*(A->left)->data, true);
+           * (B->data) += *((A->left)->data);
             A->left->parent = B;
         }
         
