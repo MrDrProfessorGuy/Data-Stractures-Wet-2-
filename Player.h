@@ -24,7 +24,7 @@ public:
     void setLevel(int new_level);
     void setGroupID(int new_group);
     
-    void increaseScore(int amount);
+    //void increaseScore(int amount);
     void increaseLevel(int amount);
     
     bool operator<(const Player& player) const;

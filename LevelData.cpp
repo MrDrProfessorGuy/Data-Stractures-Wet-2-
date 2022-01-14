@@ -16,7 +16,7 @@ LevelData::LevelData(Player& player){
     for(int i = 0; i < HIST_SIZE; i++) {
         score_hist[i] = 0;
     }
-    if (player.score < HIST_SIZE){
+    if (0 < player.score && player.score < HIST_SIZE){
         score_hist[player.score] = 1;
     }
 };
@@ -90,7 +90,7 @@ void LevelData::mergeSubLevelData(const LevelData& level_data, bool action) {
     
         for(int i = 0; i < HIST_SIZE; i++){
             score_hist[i] -= level_data.score_hist[i];
-            assert(score_hist[i] >= 0);
+            //assert(score_hist[i] >= 0);
         }
     }
     

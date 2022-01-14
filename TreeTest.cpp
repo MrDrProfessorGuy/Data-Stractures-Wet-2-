@@ -102,7 +102,6 @@ TEST(TreeTest, InsertRemoveTest){
 
 
 
-
 int main(){
     ::testing::InitGoogleTest();
     return RUN_ALL_TESTS();

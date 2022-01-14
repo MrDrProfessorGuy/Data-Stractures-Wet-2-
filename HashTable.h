@@ -24,7 +24,7 @@ public:
     int hashFunc(int id);
     Player* findPlayer(int playerID);
     bool exists(int playerID);
-    void insert(Player& new_player);
+    void insert(Player new_player);
     void remove(int playerID);
     void rehash(bool action);
     void printHash(int index=-1);

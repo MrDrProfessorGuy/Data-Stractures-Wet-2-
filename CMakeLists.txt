@@ -14,6 +14,8 @@ include_directories(googletest-main/googlemock/include)
 
 add_executable(Data_Stractures_Wet_2
         #TreeTest.cpp
+        #GameTest.cpp
+        #GroupTest.cpp
         main2.cpp
         Player.cpp Player.h
         Group.cpp Group.h
@@ -23,8 +25,6 @@ add_executable(Data_Stractures_Wet_2
         UnionFind.cpp UnionFind.h
         LevelNode.h
         LevelTree.h
-        #GameTest.cpp
-        #GroupTest.cpp
         library2.cpp)
 
 target_link_libraries(Data_Stractures_Wet_2 gtest gtest_main)

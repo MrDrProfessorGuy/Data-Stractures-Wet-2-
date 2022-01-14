@@ -33,7 +33,7 @@ public:
     bool merge(Group& group);
     
     LevelData getRank(int level, bool& levelFound);
-    bool getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &quotient);
+    bool getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &Quotient);
     
     
     void setLevelTree(LevelTree& level_tree);

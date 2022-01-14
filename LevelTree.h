@@ -166,10 +166,10 @@ public:
         }
         LevelData data = *(node->data);
         if (node->right != nullptr){
-            data -= *(node->right->data);
+            data = data - *(node->right->data);
         }
         if (node->left != nullptr){
-            data -= *(node->left->data);
+            data = data - *(node->left->data);
         }
         return data;
     }
@@ -180,7 +180,7 @@ public:
         }
         LevelData data = LevelData(*(node->key));
         if (node->right != nullptr){
-            data += *(node->right->data);
+            data = data + *(node->right->data);
         }
         return data;
     }
@@ -464,13 +464,14 @@ public:
     }
     
     StatusType removePlayer(Player player){
-        LevelData data(player);
+        LevelData playerData(player);
         StatusType status = FAILURE;
+        if (!exists(player.level)){
+            return SUCCESS;
+        }
         
-
-        removeNodeAux(this->head, data.getLevel(), data, status);
-
-    
+        removeNodeAux(this->head, playerData.getLevel(), playerData, status);
+        //removeNode(player.level);
         if (status == SUCCESS){
             size--;
         }
@@ -811,12 +812,12 @@ private:
         return node;
     }
     
-    void removeNodeAux(Node root, int key, LevelData& data, StatusType & status){
+    void removeNodeAux(Node root, int key, LevelData data, StatusType & status){
         if (root == nullptr){
             status = FAILURE;
             return;
         }
-        (*root->data) -= data;
+        (*root->data) = (*root->data) - data;
         if(key < *(root->key)){
             removeNodeAux(root->left, key, data, status);
         }
@@ -851,8 +852,46 @@ private:
         node2->setKey(node1_level);
         (*node2->data).setLevel(node1_level);
     }
-    
     void remove_tree_node(Node& root){
+        // if root has 2 sub trees
+        if(root->left != nullptr && root->right != nullptr) {
+            Node next_order = smallest(root->right);
+            LevelTree::swapNodeData(root, next_order);
+            remove_tree_node(next_order);
+        }
+        else{ // root has one sub-tree
+            if (root->left != nullptr){
+                LevelTree::swapNodeData(root, root->left);
+                delete (root->left);
+                root->left = nullptr;
+            }
+            else if (root->right != nullptr){
+                LevelTree::swapNodeData(root, root->right);
+                delete (root->right);
+                root->right = nullptr;
+            }
+            else { //leaf
+                if (root->parent != nullptr){
+                    if (root->parent->right == root){
+                        root->parent->right = nullptr;
+                    }
+                    else{
+                        root->parent->left = nullptr;
+                    }
+                }
+                if (root == head){
+                    delete root;
+                    root = nullptr;
+                    head = nullptr;
+                }
+                else{
+                    delete root;
+                    root = nullptr;
+                }
+            }
+        }// else // root has one sub-tree
+    }
+    void remove_tree_node2(Node& root){
         // if root has 2 sub trees
         if(root->left != nullptr && root->right != nullptr) {
             Node next_order = smallest(root->right);
@@ -938,12 +977,12 @@ private:
         Node A = B->left;
     
         LevelData tmp = *(B->data);
-        *(B->data) -= *(A->data);
+        *(B->data) = *(B->data) - *(A->data);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->left = A->right;
         if(A->right != nullptr) {
-            *(B->data) += *((A->right)->data);
+            *(B->data) = *(B->data) + *((A->right)->data);
             A->right->parent = B;
         }
         
@@ -979,12 +1018,12 @@ private:
         Node A = B->right;
         
         LevelData tmp = *(B->data);
-        *(B->data) -= *(A->data);
+        *(B->data) = *(B->data) - *(A->data);
         LevelData::swapSubTreeData(*(A->data), tmp);
         
         B->right = A->left;
         if(A->left != nullptr){
-           * (B->data) += *((A->left)->data);
+           *(B->data) = *(B->data) + *((A->left)->data);
             A->left->parent = B;
         }
         

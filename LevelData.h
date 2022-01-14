@@ -4,7 +4,7 @@
 
 #include "Player.h"
 
-#define HIST_SIZE 200
+#define HIST_SIZE 201
 #define INVALID_LEVEL -1
 
 class LevelData {

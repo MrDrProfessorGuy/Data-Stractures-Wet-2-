@@ -18,11 +18,11 @@ void Player::setGroupID(int new_group){
 void Player::increaseLevel(int amount) {
     level += amount;
 }
-
+/*
 void Player::increaseScore(int amount) {
     score += amount;
 }
-
+*/
 bool Player::operator<(const Player& player) const{
     return id < player.id;
 }

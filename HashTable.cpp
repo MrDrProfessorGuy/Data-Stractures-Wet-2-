@@ -44,9 +44,9 @@ Player* HashTable::findPlayer(int playerID){
     return &(*iter); //not found?
 }
 
-void HashTable::insert(Player& new_player){
+void HashTable::insert(Player new_player){
     if(exists(new_player.id)){
-        //FAILURE
+        return;//FAILURE
     }
     
     if(curr_amount == size){
@@ -58,7 +58,7 @@ void HashTable::insert(Player& new_player){
 }
 void HashTable::remove(int playerID){
     if(!exists(playerID)){
-        //FAILURE
+        return;//FAILURE
     }
     
     SortedList<Player>* curr_list = &array[hashFunc(playerID)];

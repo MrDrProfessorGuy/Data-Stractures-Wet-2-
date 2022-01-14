@@ -77,6 +77,9 @@ public:
         if (player == nullptr){
             return  FAILURE;
         }
+        gameGroup.updatePlayerLevel(PlayerID, LevelIncrease);
+        unionGroup.find(player->group_id).updatePlayerLevel(PlayerID, LevelIncrease);
+        /*
         Player player_copy = *player;
         //remove
         removePlayer(player_copy.id);
@@ -84,6 +87,7 @@ public:
         player_copy.increaseLevel(LevelIncrease);
         //Insert
         addPlayer(player_copy);
+         */
         return SUCCESS;
     }
     
@@ -107,7 +111,7 @@ public:
         }
         if (score < 0 || score > scale){
             *players = 0.0;
-            return FAILURE;
+            return SUCCESS;
         }
         
         if(GroupID == 0){
