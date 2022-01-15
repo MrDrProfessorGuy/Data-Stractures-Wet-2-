@@ -871,7 +871,7 @@ private:
         //*(node1->data) += node2Exact; ///Node1Exact SHOULD be 0!
     
         node2->setKey(node1_level);
-        *(node2->data) += node1Exact - node2Exact;
+        //*(node2->data) += node1Exact - node2Exact;
         (node2->data)->setLevel(node1_level);
         
     }
