@@ -20,9 +20,11 @@ public:
     class Iterator;
     
     LevelTree(): head(nullptr), size(0) {};
+    /*
     LevelTree(Iterator& tree1, Iterator& tree2, int combined_size): head(nullptr), size(combined_size){
         merge(tree1, tree2, combined_size);
     }
+     */
     LevelTree(const LevelTree&) = delete;
     ~LevelTree(){
         clearTree();
@@ -37,6 +39,21 @@ public:
         head = nullptr;
     }
     
+    void checkInOrder(){
+        int count = 0;
+        checkInOrderAux(head, count);
+        assert(count == size);
+    }
+    void checkInOrderAux(Node node, int& count){
+        if (node == nullptr){
+            return;
+        }
+        checkInOrderAux(node->left, count);
+        count++;
+        assert(*(node->key) == count);
+        checkInOrderAux(node->right, count);
+    }
+    /*
     StatusType merge(Iterator& tree1, Iterator& tree2, int combined_size){
         try{
             size = combined_size;
@@ -106,24 +123,7 @@ public:
         }
     }
     
-    int getSize(){
-        return size;
-    }
-    Iterator root(){
-        return Iterator(head);
-    }
-    Iterator firstInOrder(Node node = nullptr) const{
-        if (node == nullptr){
-            node = head;
-        }
-        return Iterator(smallest(node));
-    }
-    Iterator lastInOrder(Node node = nullptr) const{
-        if(node == nullptr){
-            node = head;
-        }
-        return Iterator(highest(node));
-    }
+    
     //O(Log(size))
     LevelData* findOld(const int key) const{
         if (head == nullptr){
@@ -144,7 +144,26 @@ public:
         }
         return iter->data;
     }
+    */
+    int getSize(){
+        return size;
+    }
+    Iterator root(){
+        return Iterator(head);
+    }
     
+    Iterator firstInOrder(Node node = nullptr) const{
+        if (node == nullptr){
+            node = head;
+        }
+        return Iterator(smallest(node));
+    }
+    Iterator lastInOrder(Node node = nullptr) const{
+        if(node == nullptr){
+            node = head;
+        }
+        return Iterator(highest(node));
+    }
     LevelData getExactLevelData(int level) const{
         Node node = findNode(level);
         if (node == nullptr){
@@ -162,14 +181,14 @@ public:
     //Exact Level data;
     LevelData ExactLevelData(Node node) const{
         if (node == nullptr){
-            return LevelData(0);
+            return LevelData(INVALID_LEVEL);
         }
         LevelData data = *(node->data);
         if (node->right != nullptr){
-            data = data - *(node->right->data);
+            data -= *(node->right->data);
         }
         if (node->left != nullptr){
-            data = data - *(node->left->data);
+            data -= *(node->left->data);
         }
         return data;
     }
@@ -668,7 +687,7 @@ private:
         }
         return (iter);
     }
-    
+    /*
     Iterator nextInMerge(Iterator& iter1, Iterator& iter2){
         if (*iter1 != nullptr){
             if (*iter2 != nullptr){
@@ -775,7 +794,7 @@ private:
         
         
     }
-    
+    */
     // O(Log(size))
     Node insertNodeAux(Node root, Node new_node, StatusType & status){
         Node node = nullptr;
@@ -817,7 +836,7 @@ private:
             status = FAILURE;
             return;
         }
-        (*root->data) = (*root->data) - data;
+        (*root->data) -= data;
         if(key < *(root->key)){
             removeNodeAux(root->left, key, data, status);
         }
@@ -826,7 +845,8 @@ private:
         }
         else{
             if (ExactLevelData(root).getSubPlayers() == 0){
-                remove_tree_node(root);
+                remove_tree_node(&root);
+                root = nullptr;
                 status = SUCCESS;
             }
         }
@@ -847,46 +867,51 @@ private:
         LevelData node2Exact = ExactLevelData(node2);
     
         node1->setKey(node2_level);
-        (*node1->data).setLevel((*node2->data).getLevel());
+        (node1->data)->setLevel((*node2->data).getLevel());
+        //*(node1->data) += node2Exact; ///Node1Exact SHOULD be 0!
     
         node2->setKey(node1_level);
-        (*node2->data).setLevel(node1_level);
+        *(node2->data) += node1Exact - node2Exact;
+        (node2->data)->setLevel(node1_level);
+        
     }
-    void remove_tree_node(Node& root){
+    void remove_tree_node(Node* root){
         // if root has 2 sub trees
-        if(root->left != nullptr && root->right != nullptr) {
-            Node next_order = smallest(root->right);
-            LevelTree::swapNodeData(root, next_order);
-            remove_tree_node(next_order);
+        if((*root)->left != nullptr && (*root)->right != nullptr) {
+            Node next_order = smallest((*root)->right);
+            LevelTree::swapNodeData((*root), next_order);
+            StatusType status;
+            removeNodeAux((*root)->right, *(next_order->key), ExactLevelData(next_order), status);
+            //remove_tree_node(&next_order);
         }
         else{ // root has one sub-tree
-            if (root->left != nullptr){
-                LevelTree::swapNodeData(root, root->left);
-                delete (root->left);
-                root->left = nullptr;
+            if ((*root)->left != nullptr){
+                LevelTree::swapNodeData((*root), (*root)->left);
+                delete ((*root)->left);
+                (*root)->left = nullptr;
             }
-            else if (root->right != nullptr){
-                LevelTree::swapNodeData(root, root->right);
-                delete (root->right);
-                root->right = nullptr;
+            else if ((*root)->right != nullptr){
+                LevelTree::swapNodeData((*root), (*root)->right);
+                delete ((*root)->right);
+                (*root)->right = nullptr;
             }
             else { //leaf
-                if (root->parent != nullptr){
-                    if (root->parent->right == root){
-                        root->parent->right = nullptr;
+                if ((*root)->parent != nullptr){
+                    if ((*root)->parent->right == (*root)){
+                        (*root)->parent->right = nullptr;
                     }
                     else{
-                        root->parent->left = nullptr;
+                        (*root)->parent->left = nullptr;
                     }
                 }
-                if (root == head){
-                    delete root;
-                    root = nullptr;
+                if ((*root) == head){
+                    delete (*root);
+                    (*root) = nullptr;
                     head = nullptr;
                 }
                 else{
-                    delete root;
-                    root = nullptr;
+                    delete (*root);
+                    (*root) = nullptr;
                 }
             }
         }// else // root has one sub-tree

@@ -64,8 +64,9 @@ TEST(GameTest, MergeTest)
 
 TEST(GameTest, PercentTest)
 {
+    return;
     int numOfGroups = 200;
-    int numOfPlayers = 20000;
+    int numOfPlayers = 200;
     int scale = 200;
     Game game(numOfGroups, scale);
     
@@ -122,10 +123,75 @@ TEST(GameTest, PercentTest)
     
 }
 
-TEST(GameTest, BoundTest)
+
+TEST(GameTest, BigRemoveTest)
 {
     int numOfGroups = 200;
-    int numOfPlayers = 2000;
+    int numOfPlayers = 20000;
+    int scale = 200;
+    Game game(numOfGroups, scale);
+    
+    int mod = 16;
+    
+    for(int level = 1; level <= numOfPlayers; level++){
+        int group_id = (level%mod)+1;
+        game.addPlayer(level,group_id,group_id);
+        game.IncreasePlayerLevel(level, level);
+    }
+    game.gameGroup.level_tree.checkInOrder();
+    
+    for(int level = 1; level <= numOfPlayers; level++){
+        if (level%11 == 0){
+            game.removePlayer(level);
+        }
+    }
+    
+    bool ShouldExist = false;
+    for (int group_id = 0; group_id <= (mod); group_id++) {
+        for (int Level = 1; Level < numOfPlayers; Level++) {
+            ShouldExist = false;
+            if (group_id == 0){
+                ShouldExist = true;
+            }
+            else if(group_id == ((Level%mod)+1)){
+                ShouldExist = true;
+            }
+            if (Level%11 == 0){
+                ShouldExist = false;
+            }
+            
+            Group* group_ptr = &game.unionGroup.find(group_id);
+            if (group_id == 0){
+                group_ptr = &game.gameGroup;
+            }
+            Group& group = *group_ptr;
+            
+            Player* player = group.players.findPlayer(Level);
+            if (!ShouldExist){
+                EXPECT_TRUE(player == nullptr);
+                continue;
+            }
+            EXPECT_TRUE(player != nullptr);
+            if (group_id != 0){
+                EXPECT_EQ(group_id, player->group_id);
+            }
+            
+            LevelData data = group.level_tree.getExactLevelData(Level);
+            EXPECT_EQ(Level, data.getLevel());
+            EXPECT_EQ(1, data.getSubPlayers()) << group_id << Level;
+            EXPECT_EQ(Level, data.getLevelSum());
+            if (group_id != 0){
+                EXPECT_EQ(1, data.getScoreHist()[group_id]);
+            }
+        }
+    }
+}
+
+TEST(GameTest, BoundTest)
+{
+    return;
+    int numOfGroups = 200;
+    int numOfPlayers = 200;
     int scale = 200;
     Game game(numOfGroups, scale);
     
@@ -136,11 +202,13 @@ TEST(GameTest, BoundTest)
         game.IncreasePlayerLevel(level, level);
         
     }
+    
     for(int level = 1; level <= numOfPlayers; level++){
         if (level%11 == 0){
             game.removePlayer(level);
         }
     }
+    
     game.MergeGroups(1,2);
 
     
@@ -148,14 +216,17 @@ TEST(GameTest, BoundTest)
     int counter = 0;
     for(int level = numOfPlayers; level >= 1; level--) {
         int group_id = (level % mod) + 1;
+        
         if (group_id != 1 && group_id != 2){
             continue;
         }
         
-        if (level%11 != 0){
-            counter++;
-            levelSum += level;
+        if (level%11 == 0){
+            continue;
         }
+        counter++;
+        levelSum += level;
+        
         int LowerBound, HigherBound;
         double average;
         double ExpectedAverage = double(levelSum)/counter;
@@ -163,7 +234,7 @@ TEST(GameTest, BoundTest)
         EXPECT_EQ(counter, LowerBound);
         EXPECT_EQ(counter, HigherBound);
         game.AverageHighestPlayerLevelByGroup(1, counter, &average);
-        EXPECT_EQ(ExpectedAverage, average);
+        EXPECT_EQ(ExpectedAverage, average) << level;
     
     }
     

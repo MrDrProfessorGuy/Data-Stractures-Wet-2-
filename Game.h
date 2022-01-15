@@ -63,8 +63,8 @@ public:
         if (player == nullptr){
             return FAILURE;
         }
-        
-        unionGroup.find(player->group_id).removePlayer(playerID);
+        Group& group = unionGroup.find(player->group_id);
+        group.removePlayer(playerID);
         gameGroup.removePlayer(playerID);
         return SUCCESS;
     }
