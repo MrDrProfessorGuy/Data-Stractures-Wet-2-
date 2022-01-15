@@ -36,8 +36,9 @@ public:
         if (gameGroup.players.exists(PlayerID)){
             return FAILURE;
         }
-        gameGroup.addPlayer(PlayerID, GroupID, score);
-        unionGroup.find(GroupID).addPlayer(PlayerID, GroupID, score);
+        Group& group = unionGroup.find(GroupID);
+        gameGroup.addPlayer(PlayerID, group.id, score);
+        unionGroup.find(GroupID).addPlayer(PlayerID, group.id, score);
         return SUCCESS;
     }
     
@@ -49,7 +50,8 @@ public:
         if (gameGroup.players.exists(player.id)){
             return FAILURE;
         }
-        
+        Group& group = unionGroup.find(player.group_id);
+        player.setGroupID(group.id);
         gameGroup.addPlayer(player);
         unionGroup.find(player.group_id).addPlayer(player);
         return SUCCESS;

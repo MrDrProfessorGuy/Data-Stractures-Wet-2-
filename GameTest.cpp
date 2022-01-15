@@ -145,9 +145,22 @@ TEST(GameTest, BigRemoveTest)
             game.removePlayer(level);
         }
     }
+    MergeGroups((void*)&game, 1,2);
+    
+    for(int level = 1; level <= numOfPlayers; level++){
+        if (level%11 == 0){
+            int group_id = (level%mod)+1;
+            game.addPlayer(level,group_id,group_id);
+            game.IncreasePlayerLevel(level, level);
+        }
+    }
     
     bool ShouldExist = false;
     for (int group_id = 0; group_id <= (mod); group_id++) {
+        int merged_id = group_id;
+        if (group_id == 2){
+            merged_id = 1;
+        }
         for (int Level = 1; Level < numOfPlayers; Level++) {
             ShouldExist = false;
             if (group_id == 0){
@@ -156,7 +169,12 @@ TEST(GameTest, BigRemoveTest)
             else if(group_id == ((Level%mod)+1)){
                 ShouldExist = true;
             }
-            if (Level%11 == 0){
+            if (group_id == 1 || group_id == 2){
+                if(1 == ((Level%mod)+1) || 2 == ((Level%mod)+1)){
+                    ShouldExist = true;
+                }
+            }
+            if (Level%11 == -1){
                 ShouldExist = false;
             }
             
@@ -173,7 +191,7 @@ TEST(GameTest, BigRemoveTest)
             }
             EXPECT_TRUE(player != nullptr);
             if (group_id != 0){
-                EXPECT_EQ(group_id, player->group_id);
+                EXPECT_EQ(merged_id, player->group_id);
             }
             
             LevelData data = group.level_tree.getExactLevelData(Level);
@@ -181,7 +199,7 @@ TEST(GameTest, BigRemoveTest)
             EXPECT_EQ(1, data.getSubPlayers()) << group_id << Level;
             EXPECT_EQ(Level, data.getLevelSum());
             if (group_id != 0){
-                EXPECT_EQ(1, data.getScoreHist()[group_id]);
+                //EXPECT_EQ(1, data.getScoreHist()[group_id]);
             }
         }
     }
@@ -189,7 +207,7 @@ TEST(GameTest, BigRemoveTest)
 
 TEST(GameTest, BoundTest)
 {
-    return;
+    
     int numOfGroups = 200;
     int numOfPlayers = 200;
     int scale = 200;
