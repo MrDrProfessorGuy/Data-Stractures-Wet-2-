@@ -116,6 +116,7 @@ public:
             return SUCCESS;
         }
         
+        
         if(GroupID == 0){
             *players = gameGroup.getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
         }

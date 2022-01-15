@@ -54,6 +54,9 @@ StatusType GetPercentOfPlayersWithScoreInBounds(void *DS, int GroupID, int score
     if (DS == nullptr){
         return INVALID_INPUT;
     }
+    if (lowerLevel > higherLevel){
+        return FAILURE;
+    }
     Game* game = (Game*)DS;
     return game->getPercentOfPlayersWithScoreInBounds(GroupID, score, lowerLevel, higherLevel, players);
 }

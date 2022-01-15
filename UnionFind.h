@@ -89,7 +89,7 @@ public:
         }
         else{
             merge(group2, group1, group2_id, group1_id);
-            group2.id = group1_id;
+            //group2.id = group1_id;
         }
     }
 

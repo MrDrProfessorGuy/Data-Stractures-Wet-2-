@@ -64,7 +64,6 @@ TEST(GameTest, MergeTest)
 
 TEST(GameTest, PercentTest)
 {
-    return;
     int numOfGroups = 200;
     int numOfPlayers = 200;
     int scale = 200;
@@ -148,10 +147,12 @@ TEST(GameTest, BigRemoveTest)
     MergeGroups((void*)&game, 1,2);
     
     for(int level = 1; level <= numOfPlayers; level++){
-        if (level%11 == 0){
+        if (level%17 == 0){
             int group_id = (level%mod)+1;
             game.addPlayer(level,group_id,group_id);
-            game.IncreasePlayerLevel(level, level);
+            if (level%11 == 0){
+                game.IncreasePlayerLevel(level, level);
+            }
         }
     }
     
@@ -174,8 +175,20 @@ TEST(GameTest, BigRemoveTest)
                     ShouldExist = true;
                 }
             }
-            if (Level%11 == -1){
+            if (Level%11 == 0){
                 ShouldExist = false;
+            }
+            
+            if (group_id == 0 && (Level%17 == 0)){
+                ShouldExist = true;
+            }
+            else if(group_id == ((Level%mod)+1) && (Level%17 == 0)){
+                ShouldExist = true;
+            }
+            if (group_id == 1 || group_id == 2){
+                if((1 == ((Level%mod)+1)  && (Level%17 == 0) )|| (2 == ((Level%mod)+1) && (Level%17 == 0))){
+                    ShouldExist = true;
+                }
             }
             
             Group* group_ptr = &game.unionGroup.find(group_id);

@@ -167,7 +167,7 @@ public:
     LevelData getExactLevelData(int level) const{
         Node node = findNode(level);
         if (node == nullptr){
-            return LevelData(0);
+            return LevelData(INVALID_LEVEL);
         }
         LevelData data = *(node)->data;
         if (node->right != nullptr){
@@ -664,7 +664,8 @@ private:
     }
     Node findNode(const int key, bool ReturnNULL = true) const{
         if (head == nullptr){
-            return smallest(head);
+            //return smallest(head);
+            return nullptr;
         }
         Node iter = this->head;
         Node last_right = nullptr;
@@ -683,7 +684,8 @@ private:
             if (ReturnNULL == false){
                 return (last_right);
             }
-            return smallest(head);
+            //return smallest(head);
+            return nullptr;
         }
         return (iter);
     }
