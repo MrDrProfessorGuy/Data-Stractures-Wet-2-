@@ -21,29 +21,40 @@ int Group::getNumPlayers(){
     return players.curr_amount;
 }
 
-void Group::addPlayer(int player_id,int  GroupID , int score){
+void Group::addPlayer(int player_id, int GroupID , int score){
     if (players.exists(player_id)){
         return;
     }
     
     Player new_player(player_id, GroupID, score);
+    LevelData playerData(new_player);
     players.insert(new_player);
-    
-    level_tree.insertPlayer(new_player);
+    levelZero += playerData;
 }
 void Group::addPlayer(Player player){
     if (players.exists(player.id)){
         return;
     }
-    players.insert(player);
-    level_tree.insertPlayer(player);
+    if (player.level > 0){
+        players.insert(player);
+        level_tree.insertPlayer(player);
+    }
+    else if (player.level == 0){
+        addPlayer(player.id, player.group_id, player.score);
+    }
 }
 void Group::removePlayer(int player_id){
     Player* player = players.findPlayer(player_id);
     if (player == nullptr){
         return;
     }
-    level_tree.removePlayer(*player);
+    if (player->level > 0){
+        level_tree.removePlayer(*player);
+    }
+    else if (player->level == 0){
+        LevelData playerData(*player);
+        levelZero -= playerData;
+    }
     players.remove(player_id);
 }
 
@@ -52,82 +63,76 @@ void Group::updatePlayerLevel(int player_id, int amount){
     if (player == nullptr){
         return;
     }
-
-    level_tree.removePlayer(*player);
-    player->increaseLevel(amount);
-    level_tree.insertPlayer(*player);
+    
+    if (player->level > 0){
+        level_tree.removePlayer(*player);
+        player->increaseLevel(amount);
+        level_tree.insertPlayer(*player);
+    }
+    else if (player->level == 0){
+        LevelData playerData(*player);
+        levelZero -= playerData;
+        player->increaseLevel(amount);
+        level_tree.insertPlayer(*player);
+    }
 }
 void Group::updatePlayerScore(int player_id, int amount){
     Player* player = players.findPlayer(player_id);
     if (player == nullptr){
         return;
     }
-    
-    level_tree.removePlayer(*player);
-    player->setScore(amount);
-    level_tree.insertPlayer(*player);
-}
-void Group::updatePlayerGroup(int player_id, int group_id){
-    Player* player = players.findPlayer(player_id);
-    if (player == nullptr){
-        return;
+    if (player->level > 0){
+        level_tree.removePlayer(*player);
+        player->setScore(amount);
+        level_tree.insertPlayer(*player);
     }
-    player->setGroupID(group_id);
+    else if (player->level == 0){
+        LevelData playerData(*player);
+        levelZero -= playerData;
+        player->setScore(amount);
+        playerData = LevelData(*player);
+        levelZero += playerData;
+    }
+    
 }
 
 bool Group::merge(Group& group){
     // ===== merge hashTable =====
-    int counter = 0;
     int group_size = group.players.size;
-    int groupPlayerAmount = group.players.curr_amount;
     for (int index = 0; index < group_size; index++){
         SortedList<Player>::const_iterator iter = group.players.array[index].begin();
         SortedList<Player>::const_iterator end = group.players.array[index].end();
         while (iter != end){
             (*iter).setGroupID(id);
             addPlayer(*iter);
-            //players.insert(*iter);
-            // ===== merge LevelTree ===== //
-            //level_tree.insertPlayer(*iter);
             iter++;
-            counter++;
         }
     }
-    assert(counter == groupPlayerAmount);
-    /*
-    // ===== merge LevelTree =====
-    LevelTree::Iterator iter2 = group.level_tree.firstInOrder();
-    while (*iter2 != nullptr){
-        level_tree.insert((*iter2)->getLevel(), *(*iter2));
-        iter2++;
-    }
-     */
+    //levelZero += group.levelZero;
     return true;
 }
 
 int dataFunc(LevelData& data){
     return data.getSubPlayers();
 }
-int byLevel(LevelData& data){
-    return data.getLevel();
-}
-
 
 LevelData Group::getRank(int level, bool& levelFound){
-    LevelData level_rank(level);
     levelFound = true;
     
-    if (level == -1){
+    if (level == 0){
         return levelZero;
     }
-    else{
+    else if (level > 0){
         if (!level_tree.exists(level)){
             levelFound = false;
         }
-        LevelData data = (level_tree.getRank(level, false));
+        LevelData data = (level_tree.getRank(level, false)) + levelZero;
+        if (data.getLevel() == INVALID_LEVEL && levelZero.getSubPlayers() > 0){
+            data = levelZero;
+        }
         return data;
     }
-
+    return LevelData(INVALID_LEVEL);
 }
 
 bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &Quotient){
@@ -148,7 +153,19 @@ bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelDa
     }
     
     int target_num_players = total_players - num_of_players;
+    if (target_num_players <= levelZero.getSubPlayers()){
+        Quotient = higher_bound - levelZero;
+        Quotient.setLevel(higher_bound.getLevel());
+        if (target_num_players != levelZero.getSubPlayers()){
+            Remainder = levelZero;
+        }
+        return true;
+    }
+    
+    target_num_players -= levelZero.getSubPlayers();
+    higher_bound -= levelZero;
     LevelData lower_bound = level_tree.getLevelDataRank(target_num_players,dataFunc,false);
+    
     if (lower_bound.getSubPlayers() == target_num_players){
         Quotient = higher_bound - lower_bound;
     }
@@ -158,7 +175,7 @@ bool Group::getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelDa
             remainder_iter++;
         }
         bool found;
-        LevelData iterRank = getRank((*remainder_iter)->getLevel(), found);
+        LevelData iterRank = getRank((*remainder_iter)->getLevel(), found) - levelZero;
     
         Quotient = higher_bound - iterRank;
         Remainder = iterRank - lower_bound;
@@ -180,7 +197,6 @@ double Group::getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, in
     if (total_players == 0){
         return FAILURE;
     }
-    //int test = (players_with_score/total_players)*100.0;
     return (players_with_score/total_players)*100.0;
 }
 
@@ -245,25 +261,31 @@ bool Group::GetPlayersBound(int score, int num_of_players, int *LowerBoundPlayer
 // =========================================================================== //
 
 LevelData Group::getLevelData(int level){
-    if (level == -1){
+    if (level == 0){
+        if (levelZero.getSubPlayers() == 0){
+            return LevelData(INVALID_LEVEL);
+        }
         return levelZero;
     }
     else{
         LevelData* data = level_tree.find(level);
         if (data != nullptr){
-            ((*data).mergeSubLevelData(levelZero, true));
+            *data += levelZero;
             return *data;
         }
-        return levelZero;
+        return getLevelData(0);
     }
 }
 
 LevelData Group::getGroupRank(){
     if (*level_tree.root() == nullptr){
+        if (levelZero.getSubPlayers() > 0){
+            return levelZero;
+        }
         return LevelData(INVALID_LEVEL);
     }
     else{
         bool found;
-        return getRank((*(level_tree.lastInOrder()).getKey()), found);
+        return (getRank((*(level_tree.lastInOrder()).getKey()), found));
     }
 }

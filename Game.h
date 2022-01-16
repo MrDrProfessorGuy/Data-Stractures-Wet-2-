@@ -36,6 +36,7 @@ public:
         if (gameGroup.players.exists(PlayerID)){
             return FAILURE;
         }
+        ///add to LevelZero
         Group& group = unionGroup.find(GroupID);
         gameGroup.addPlayer(PlayerID, group.id, score);
         unionGroup.find(GroupID).addPlayer(PlayerID, group.id, score);
@@ -81,15 +82,6 @@ public:
         }
         gameGroup.updatePlayerLevel(PlayerID, LevelIncrease);
         unionGroup.find(player->group_id).updatePlayerLevel(PlayerID, LevelIncrease);
-        /*
-        Player player_copy = *player;
-        //remove
-        removePlayer(player_copy.id);
-        //increase
-        player_copy.increaseLevel(LevelIncrease);
-        //Insert
-        addPlayer(player_copy);
-         */
         return SUCCESS;
     }
     

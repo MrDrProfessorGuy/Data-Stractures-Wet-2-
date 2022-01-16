@@ -1,7 +1,3 @@
-//
-// Created by guy cohen on 03/01/2022.
-//
-
 #ifndef DATA_STRACTURES_WET_2_LEVELTREE_H
 #define DATA_STRACTURES_WET_2_LEVELTREE_H
 
@@ -515,7 +511,7 @@ public:
         if (status == SUCCESS){
             size--;
         }
-        checkTreeForm();
+        //checkTreeForm();
         return status;
     }
     StatusType removeNode(int key){
