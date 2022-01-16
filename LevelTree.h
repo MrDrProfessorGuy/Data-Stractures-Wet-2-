@@ -53,6 +53,27 @@ public:
         assert(*(node->key) == count);
         checkInOrderAux(node->right, count);
     }
+    void checkTreeForm(){
+        checkTreeFormAux(head);
+    }
+    int checkTreeFormAux(Node node){
+        if (node == nullptr){
+            return 0;
+        }
+        int current_height = 0;
+        int left_height = checkTreeFormAux(node->left);
+        int right_height = checkTreeFormAux(node->right);
+        if (left_height >= right_height){
+            current_height = left_height+1;
+            assert((left_height - right_height) <= 1);
+        }
+        else{
+            current_height = right_height+1;
+            assert((right_height - left_height) <= 1);
+        }
+        
+        return current_height;
+    }
     /*
     StatusType merge(Iterator& tree1, Iterator& tree2, int combined_size){
         try{
@@ -494,6 +515,7 @@ public:
         if (status == SUCCESS){
             size--;
         }
+        checkTreeForm();
         return status;
     }
     StatusType removeNode(int key){
@@ -833,7 +855,7 @@ private:
         return node;
     }
     
-    void removeNodeAux(Node root, int key, LevelData data, StatusType & status){
+    void removeNodeAux(Node root, int key, LevelData data, StatusType& status){
         if (root == nullptr){
             status = FAILURE;
             return;
@@ -884,6 +906,8 @@ private:
             LevelTree::swapNodeData((*root), next_order);
             StatusType status;
             removeNodeAux((*root)->right, *(next_order->key), ExactLevelData(next_order), status);
+            (*root)->updateHeight();
+            balanceTree(*root);
             //remove_tree_node(&next_order);
         }
         else{ // root has one sub-tree
@@ -891,11 +915,13 @@ private:
                 LevelTree::swapNodeData((*root), (*root)->left);
                 delete ((*root)->left);
                 (*root)->left = nullptr;
+                (*root)->updateHeight();
             }
             else if ((*root)->right != nullptr){
                 LevelTree::swapNodeData((*root), (*root)->right);
                 delete ((*root)->right);
                 (*root)->right = nullptr;
+                (*root)->updateHeight();
             }
             else { //leaf
                 if ((*root)->parent != nullptr){
