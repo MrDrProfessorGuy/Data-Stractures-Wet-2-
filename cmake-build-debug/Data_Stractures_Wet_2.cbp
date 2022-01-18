@@ -384,9 +384,6 @@
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelData.h">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>
-		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelNode.h">
-			<Option target="Data_Stractures_Wet_2"/>
-		</Unit>
 		<Unit filename="/Users/guycohen/OneDrive - Technion/1 Courses/Data Structures 1/Homework/Wet 2/Data-Stractures-Wet-2/LevelTree.h">
 			<Option target="Data_Stractures_Wet_2"/>
 		</Unit>

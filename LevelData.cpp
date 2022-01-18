@@ -1,5 +1,4 @@
 #include "LevelData.h"
-#include "assert.h"
 
 LevelData::LevelData(int level): level(level),
                                 level_sum(0), sub_tree_players(0){
@@ -62,17 +61,6 @@ void LevelData::setScoreHist(int *hist) {
         score_hist[i] = hist[i];
     }
 }
-void LevelData::addNewData(const Player& player){
-    level_sum += player.level;
-    sub_tree_players++;
-    score_hist[player.score]++;
-}
-void LevelData::removeData(const Player& player){
-    level_sum -= player.level;
-    sub_tree_players--;
-    score_hist[player.score]--;
-    
-}
 
 // action = true - add
 // action = false - subtraction
@@ -94,16 +82,6 @@ void LevelData::mergeSubLevelData(const LevelData& level_data, bool action) {
         }
     }
     
-}
-// rewmove : action = false
-// add : action = true
-void LevelData::updateScore(int score, bool action){
-    if(action){
-        score_hist[score]++;
-    }
-    else {
-        score_hist[score]--;
-    }
 }
 
 bool LevelData::operator<(const LevelData& level_data) const{

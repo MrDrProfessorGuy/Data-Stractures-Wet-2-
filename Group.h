@@ -8,13 +8,6 @@
 #include "HashTable.h"
 
 
-
-typedef enum {
-    LEVEL_SUM = 0,
-    SUB_TREE_PLAYERS = -1,
-    SCORE_HIST = -2,
-} RankType;
-
 class Group {
 private:
     LevelData getLevelData(int level);
@@ -35,10 +28,6 @@ public:
     LevelData getRank(int level, bool& levelFound);
     bool getTopPlayersStats(int num_of_players, LevelData &Remainder, LevelData &Quotient);
     
-    
-    void setLevelTree(LevelTree& level_tree);
-    void setLevelZero(LevelData& levelZero);
-    void setPlayers(HashTable players);
     int getNumPlayers();
     void addPlayer(int player_id, int score, int level = 0);
     void addPlayer(Player player);
@@ -46,7 +35,6 @@ public:
     
     void updatePlayerLevel(int player_id, int new_level);
     void updatePlayerScore(int player_id, int new_score);
-    void updatePlayerGroup(int player_id, int group_id);
     
     double getPercentOfPlayersWithScoreInBounds(int score, int lowerLevel, int higherLevel);
     

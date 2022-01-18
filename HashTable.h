@@ -17,7 +17,7 @@ public:
     SortedList<Player> *array;
     
     HashTable();
-    HashTable(const HashTable&);
+    HashTable(const HashTable&) = delete;
     ~HashTable();
     
     
@@ -27,7 +27,6 @@ public:
     void insert(Player new_player);
     void remove(int playerID);
     void rehash(bool action);
-    void printHash(int index=-1);
     
     
 };

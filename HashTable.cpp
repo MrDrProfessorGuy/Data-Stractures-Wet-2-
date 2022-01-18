@@ -1,18 +1,9 @@
 #include "HashTable.h"
-#include "iostream"
-#include <ostream>
 
 
 
 HashTable::HashTable(): size(INITIAL_SIZE), curr_amount(0){
     array = new SortedList<Player>[INITIAL_SIZE];
-}
-
-HashTable::HashTable(const HashTable& hashTable): size(hashTable.size), curr_amount(hashTable.curr_amount){
-    array = new SortedList<Player>[hashTable.size];
-    for(int i = 0; i < size; i++){
-        array[i] = hashTable.array[i];
-    }
 }
 
 HashTable::~HashTable(){
@@ -63,7 +54,7 @@ void HashTable::remove(int playerID){
     
     SortedList<Player>* curr_list = &array[hashFunc(playerID)];
     SortedList<Player>::const_iterator iter = curr_list->begin();
-    SortedList<Player>::const_iterator end = curr_list->end();
+    //SortedList<Player>::const_iterator end = curr_list->end();
     while((*iter).id != playerID){
         iter++;
     }
@@ -109,34 +100,3 @@ void HashTable::rehash(bool action){
     }
     delete [] tmp;
 }
-
-void HashTable::printHash(int index){
-    if (index != -1){
-        std::cout << index;
-    
-        SortedList<Player>::const_iterator iter = array[index].begin();
-        SortedList<Player>::const_iterator end = array[index].end();
-    
-        while(iter != end){
-            std::cout << "-> " << (*iter).id;
-            iter++;
-        }
-        std::cout << std::endl;
-        return;
-    }
-    
-    for(int i = 0; i < size; i++){
-        std::cout << i;
-        
-        SortedList<Player>::const_iterator iter = array[i].begin();
-        SortedList<Player>::const_iterator end = array[i].end();
-        
-        while(iter != end){
-            std::cout << "-> " << (*iter).id;
-            iter++;
-        }
-        std::cout << std::endl;
-    }
-}
-
-

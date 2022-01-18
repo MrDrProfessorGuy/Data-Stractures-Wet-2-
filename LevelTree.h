@@ -4,7 +4,6 @@
 #include "AVL_Node.h"
 #include "LevelData.h"
 #include "exception"
-#include "iostream"
 #include "library2.h"
 
     
@@ -16,11 +15,6 @@ public:
     class Iterator;
     
     LevelTree(): head(nullptr), size(0) {};
-    /*
-    LevelTree(Iterator& tree1, Iterator& tree2, int combined_size): head(nullptr), size(combined_size){
-        merge(tree1, tree2, combined_size);
-    }
-     */
     LevelTree(const LevelTree&) = delete;
     ~LevelTree(){
         clearTree();
@@ -35,133 +29,6 @@ public:
         head = nullptr;
     }
     
-    void checkInOrder(){
-        int count = 0;
-        checkInOrderAux(head, count);
-        assert(count == size);
-    }
-    void checkInOrderAux(Node node, int& count){
-        if (node == nullptr){
-            return;
-        }
-        checkInOrderAux(node->left, count);
-        count++;
-        assert(*(node->key) == count);
-        checkInOrderAux(node->right, count);
-    }
-    void checkTreeForm(){
-        checkTreeFormAux(head);
-    }
-    int checkTreeFormAux(Node node){
-        if (node == nullptr){
-            return 0;
-        }
-        int current_height = 0;
-        int left_height = checkTreeFormAux(node->left);
-        int right_height = checkTreeFormAux(node->right);
-        if (left_height >= right_height){
-            current_height = left_height+1;
-            assert((left_height - right_height) <= 1);
-        }
-        else{
-            current_height = right_height+1;
-            assert((right_height - left_height) <= 1);
-        }
-        
-        return current_height;
-    }
-    /*
-    StatusType merge(Iterator& tree1, Iterator& tree2, int combined_size){
-        try{
-            size = combined_size;
-            if (combined_size > 0){
-                int tree_height = (int)log2(combined_size);
-                head = new AVL_Node<int, LevelData>();
-                head->height = tree_height;
-                int nodes_left = combined_size-1;
-                
-                FullTree(head, nodes_left, tree_height);
-                halfFullTree(head, nodes_left, tree_height);
-                mergeAux(tree1, tree2, head);
-            }
-            
-        }
-        catch (std::bad_alloc& e){
-            clearTree();
-            throw e;
-        }
-        
-        return SUCCESS;
-    }
-    
-    void balance_merge(Node root){
-        if (root->right != nullptr){
-            balance_merge(root->right);
-        }
-        balanceTree(root);
-        if (root->left != nullptr){
-            balance_merge(root->left);
-        }
-    }
-    
-    void print(){
-        printTree(head);
-    }
-    
-    void printTree(Node root){
-        if (root == nullptr){
-            return;
-        }
-        if (root->left != nullptr){
-            printTree(root->left);
-        }
-        int parent_id = -1;
-        int left_id = -1;
-        int right_id = -1;
-        
-        std::cout << "============ player " << *(root->key) << "============" << std::endl;
-        if (root->parent != nullptr){
-            parent_id = *(root->parent->key);
-        }
-        if (root->right != nullptr){
-            right_id = *(root->right->key);
-        }
-        if (root->left != nullptr){
-            left_id = *(root->left->key);
-        }
-        std::cout << "parent: " << parent_id << std::endl;
-        std::cout << "left: " << left_id << std::endl;
-        std::cout << "right: " << right_id << std::endl;
-        std::cout << std::endl;
-        
-        
-        if (root->right != nullptr){
-            printTree(root->right);
-        }
-    }
-    
-    
-    //O(Log(size))
-    LevelData* findOld(const int key) const{
-        if (head == nullptr){
-            return nullptr;
-        }
-        Node iter = this->head;
-        while(iter != nullptr && *(iter->key) != key)
-        {
-            if(*(iter->key) < key){
-                iter = iter->right;
-            }
-            else{
-                iter = iter->left;
-            }
-        }
-        if (iter == nullptr){
-            return nullptr;
-        }
-        return iter->data;
-    }
-    */
     int getSize(){
         return size;
     }
@@ -180,20 +47,6 @@ public:
             node = head;
         }
         return Iterator(highest(node));
-    }
-    LevelData getExactLevelData(int level) const{
-        Node node = findNode(level);
-        if (node == nullptr){
-            return LevelData(INVALID_LEVEL);
-        }
-        LevelData data = *(node)->data;
-        if (node->right != nullptr){
-            data -= *(node->right->data);
-        }
-        if (node->left != nullptr){
-            data -= *(node->left->data);
-        }
-        return data;
     }
     //Exact Level data;
     LevelData ExactLevelData(Node node) const{
@@ -308,87 +161,12 @@ public:
         rank.setLevel(*(iter->key));
         return (rank);
     }
-    LevelData getRank2(const int key, bool ReturnNULL = false) const{
-        if (head == nullptr){
-            return LevelData(key);
-        }
-        bool turned_left = false;
-        bool turned_right = false;
-        Node iter = this->head;
-        LevelData rank(*(iter->data));
-        LevelData rankSup = rank;
-        rankSup.setLevel((*firstInOrder(head))->getLevel());
-        
-        while(iter != nullptr && *(iter->key) != key){
-            if(key < *(iter->key)){
-                rank.setLevel(*(iter->key));
-                rank = rank - NodeRightRank(iter) - ExactLevelData(iter);
-                iter = iter->left;
-            }
-            else{
-                if (rankSup.getLevel() < rank.getLevel()){
-                    rankSup = rank - NodeRightRank(iter);
-                    rankSup.setLevel(*(iter->key));
-                }
-                iter = iter->right;
-            }
-        }
-        
-        if (iter == nullptr){
-            if (ReturnNULL == false){
-                return rankSup;
-            }
-            return LevelData(key);
-        }
-        rank = rank - NodeRightRank(iter);
-        rank.setLevel(*(iter->key));
-        return (rank);
-    }
-    LevelData getRankOLD(const int key, bool ReturnNULL = true) const{
-        if (head == nullptr){
-            return LevelData(key);
-        }
-        bool turned_left = false;
-        Node iter = this->head;
-        LevelData rank(key);
-        rank = LevelData(*iter->data);
-        LevelData last_right_rank = rank;
-        //last_right_rank -= FuckTrees2(iter);
-        
-        while(iter != nullptr && *(iter->key) != key){
-            if(key < *(iter->key)){
-                rank -= ExactLevelData(iter) - NodeRightRank(iter);
-                rank.setLevel(iter->data->getLevel());
-                iter = iter->left;
-                turned_left = true;
-            }
-            else{
-                if (!turned_left){
-                    last_right_rank = rank;
-                    last_right_rank -= NodeRightRank(iter);
-                    last_right_rank.setLevel(iter->data->getLevel());
-                }
-                iter = iter->right;
-            }
-        }
-        
-        if (iter == nullptr){
-            if (ReturnNULL == false){
-                return last_right_rank;
-            }
-            return LevelData(key);
-        }
-
-        rank = rank - NodeRightRank(iter);
-        rank.setLevel(iter->data->getLevel());
-        return (rank);
-    }
     LevelData getLevelDataRank(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
         if (head == nullptr){
             return LevelData(INVALID_LEVEL);
         }
         Node iter = this->head;
-        Node last_right = nullptr;
+        //Node last_right = nullptr;
         LevelData rank = *(iter->data) - NodeRightRank(iter);
         LevelData last_right_rank(INVALID_LEVEL);
         
@@ -402,7 +180,7 @@ public:
                 iter = iter->left;
             }
             else{
-                last_right = iter;
+                //last_right = iter;
                 last_right_rank = rank;
                 last_right_rank.setLevel(*(iter->key));
                 
@@ -423,46 +201,7 @@ public:
         rank.setLevel(*(iter->key));
         return rank;
     }
-
-    LevelData getLevelDataRank3(const int key, int dataFunc(LevelData&), bool ReturnNULL = true) const{
-        if (head == nullptr){
-            return LevelData(key);
-        }
-        Node iter = this->head;
-        LevelData rank = getRank(*(iter->key));
-        //rank = LevelData(*iter->data);
-        LevelData last_right_rank(INVALID_LEVEL);
-        
-        
-        while(iter != nullptr && dataFunc(rank) != key){
-            if(key < dataFunc(rank)){
-                if (iter->right != nullptr){
-                    rank -= (*(iter->right)->data);
-                }
-                rank -= ExactLevelData(iter);
-                rank.setLevel(iter->data->getLevel());
-                iter = iter->left;
-            }
-            else{
-                last_right_rank = rank;
-                last_right_rank -= NodeRightRank(iter);
-                last_right_rank.setLevel(iter->data->getLevel());
-                iter = iter->right;
-            }
-        }
-        
-        if (iter == nullptr){
-            if (ReturnNULL == false){
-                return last_right_rank;
-            }
-            return LevelData(key);
-        }
-        if (iter != head){
-            rank = rank - NodeRightRank(iter);
-        }
-        rank.setLevel(iter->data->getLevel());
-        return (rank);
-    }
+    
     bool exists(const int& key) const{
         if (find(key) == nullptr){
             return false;
@@ -474,7 +213,6 @@ public:
         LevelData data(player);
         return insert(player.level, data);
     }
-    
     //O(Log(size))
     LevelData* insert(int key, LevelData data){ // update trees' info
         StatusType status = FAILURE;
@@ -512,27 +250,6 @@ public:
             size--;
         }
         //checkTreeForm();
-        return status;
-    }
-    StatusType removeNode(int key){
-        //not_finished + update trees' info
-        StatusType status = FAILURE;
-        if (size == 1 && key == *(head->key)){
-            delete head;
-            head = nullptr;
-            status = SUCCESS;
-        }
-        else{
-            LevelData* data = find(key);
-            if (data == nullptr){
-                return SUCCESS;
-            }
-            removeNodeAux(this->head, key, *data, status);
-        }
-        
-        if (status == SUCCESS){
-            size--;
-        }
         return status;
     }
     static Node highest(Node root){
@@ -680,141 +397,6 @@ private:
         delete root;
         root = nullptr;
     }
-    Node findNode(const int key, bool ReturnNULL = true) const{
-        if (head == nullptr){
-            //return smallest(head);
-            return nullptr;
-        }
-        Node iter = this->head;
-        Node last_right = nullptr;
-        while(iter != nullptr && *(iter->key) != key)
-        {
-            if(key < *(iter->key)){
-                iter = iter->left;
-            }
-            else{
-                last_right = iter;
-                iter = iter->right;
-            }
-        }
-        
-        if (iter == nullptr){
-            if (ReturnNULL == false){
-                return (last_right);
-            }
-            //return smallest(head);
-            return nullptr;
-        }
-        return (iter);
-    }
-    /*
-    Iterator nextInMerge(Iterator& iter1, Iterator& iter2){
-        if (*iter1 != nullptr){
-            if (*iter2 != nullptr){
-                if (iter1 < iter2){
-                    return iter1++;
-                }
-                return iter2++;
-            }
-            return iter1++;
-        }
-        return iter2++;
-    }
-    LevelData nextInRankMerge(Iterator& iter1, Iterator& iter2){
-        LevelData data(0);
-        if (*iter1 != nullptr){
-            if (*iter2 != nullptr){
-                if (iter1 < iter2){
-                    data = (*(*iter1));
-                    iter1++;
-                    return data;
-                }
-                else if (iter1 == iter2){
-                    data = (*(*iter1)) + (*(*iter2));
-                    iter1++;
-                    iter2++;
-                    return data;
-                }
-                data = (*(*iter2));
-                iter2++;
-                return data;
-            }
-            data = (*(*iter1));
-            iter1++;
-            return data;
-        }
-        data = (*(*iter2));
-        iter2++;
-        return data;
-    }
-    void mergeAux(Iterator& tree1, Iterator& tree2, Node current_node){
-        if (current_node->left != nullptr){
-            mergeAux(tree1, tree2, current_node->left);
-        }
-        LevelData current_data = nextInRankMerge(tree1, tree2);
-        int level = current_data.getLevel();
-        current_node->setKey(level);
-        current_node->setData(current_data);
-        
-        if (current_node->right != nullptr){
-            mergeAux(tree1, tree2, current_node->right);
-        }
-        
-    }
-    
-    void mergeAuxOLD(Iterator& tree1, Iterator& tree2, Node current_node){
-        if (current_node->left != nullptr){
-            mergeAux(tree1, tree2, current_node->left);
-        }
-        Iterator current_data = nextInMerge(tree1, tree2);
-        current_node->key = new int(*current_data.getKey());
-        current_node->data = new LevelData(*(*current_data));
-        
-        if (current_node->right != nullptr){
-            mergeAux(tree1, tree2, current_node->right);
-        }
-        
-    }
-    
-    void halfFullTree(Node current_node, int& nodes_left, int current_height){
-        if (current_node->right != nullptr){
-            halfFullTree(current_node->right, nodes_left, current_height-1);
-        }
-        if (current_node->left != nullptr){
-            halfFullTree(current_node->left, nodes_left, current_height-1);
-        }
-        if (current_height == 0 && nodes_left < 0){
-            if (current_node->parent->left == current_node){
-                current_node->parent->left = nullptr;
-            }
-            else{
-                current_node->parent->right = nullptr;
-            }
-            delete current_node;
-            nodes_left++;
-        }
-    }
-    
-    void FullTree(Node current_node, int& nodes_left, int current_height){
-        if (0 < current_height){
-            Node left_node = new AVL_Node<int, LevelData>();
-            left_node->height = current_height - 1;
-            current_node->left = left_node;
-            left_node->parent = current_node;
-            FullTree(left_node, --nodes_left, current_height - 1);
-        }
-        
-        if (0 < current_height){
-            Node right_node = new AVL_Node<int, LevelData>();
-            right_node->height = current_height - 1;
-            current_node->right = right_node;
-            right_node->parent = current_node;
-            FullTree(right_node, --nodes_left, current_height - 1);
-        }
-        
-        
-    }
-    */
     // O(Log(size))
     Node insertNodeAux(Node root, Node new_node, StatusType & status){
         Node node = nullptr;
@@ -940,60 +522,6 @@ private:
             }
         }// else // root has one sub-tree
     }
-    void remove_tree_node2(Node& root){
-        // if root has 2 sub trees
-        if(root->left != nullptr && root->right != nullptr) {
-            Node next_order = smallest(root->right);
-            LevelTree::swapNodeData(root, next_order);
-            if (next_order->right != nullptr) {
-                LevelTree::swapNodeData(next_order->right, next_order);
-                delete (next_order->right);
-                next_order->right = nullptr;
-            }
-            else{
-                if (next_order->parent->left == next_order){
-                    next_order->parent->left = nullptr;
-                }
-                else{
-                    next_order->parent->right = nullptr;
-                }
-                delete next_order;
-                
-            }
-        }
-        else{ // root has one sub-tree
-            if (root->left != nullptr){
-                LevelTree::swapNodeData(root, root->left);
-                delete (root->left);
-                root->left = nullptr;
-            }
-            else if (root->right != nullptr){
-                LevelTree::swapNodeData(root, root->right);
-                delete (root->right);
-                root->right = nullptr;
-            }
-            else { //leaf
-                if (root->parent != nullptr){
-                    if (root->parent->right == root){
-                        root->parent->right = nullptr;
-                    }
-                    else{
-                        root->parent->left = nullptr;
-                    }
-                }
-                if (root == head){
-                    delete root;
-                    root = nullptr;
-                    head = nullptr;
-                }
-                else{
-                    delete root;
-                    root = nullptr;
-                }
-            }
-        }// else // root has one sub-tree
-    }
-    
     void balanceTree(Node root) {
         int curr_balance = root->getBalance();
         if (curr_balance == -2) {

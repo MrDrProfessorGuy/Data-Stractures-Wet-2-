@@ -43,21 +43,6 @@ public:
         return SUCCESS;
     }
     
-    StatusType addPlayer(Player player){
-        if (player.group_id <= 0 || player.group_id > num_of_groups || player.id <= 0 ||
-            player.score <= 0 || scale < player.score){
-            return INVALID_INPUT;
-        }
-        if (gameGroup.players.exists(player.id)){
-            return FAILURE;
-        }
-        Group& group = unionGroup.find(player.group_id);
-        player.setGroupID(group.id);
-        gameGroup.addPlayer(player);
-        unionGroup.find(player.group_id).addPlayer(player);
-        return SUCCESS;
-    }
-    
     StatusType removePlayer(int playerID){
         if (playerID <= 0){
             return INVALID_INPUT;
@@ -108,7 +93,6 @@ public:
             return SUCCESS;
         }
         
-        
         if(GroupID == 0){
             *players = gameGroup.getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
         }
@@ -141,6 +125,7 @@ public:
         }
         return SUCCESS;
     }
+    
     StatusType GetPlayersBound(int GroupID, int score, int num_of_players, int *LowerBoundPlayers, int *HigherBoundPlayers){
         if(LowerBoundPlayers == nullptr || HigherBoundPlayers == nullptr || GroupID < 0 || GroupID > num_of_groups
                                         || score <= 0 || score > scale || num_of_players < 0){
@@ -170,7 +155,6 @@ public:
         unionGroup.unite(group_1,group_2);
         return SUCCESS;
     }
-    
 };
 
 

@@ -1,13 +1,8 @@
 #ifndef DATA_STRACTURES_WET_2_UNIONFIND_H
 #define DATA_STRACTURES_WET_2_UNIONFIND_H
 
-
-
-
 #include "Group.h"
 #include "memory"
-#include "assert.h"
-
 
 
 

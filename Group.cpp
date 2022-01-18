@@ -1,7 +1,3 @@
-//
-// Created by guy cohen on 30/12/2021.
-//
-
 #include "Group.h"
 
 // =========================================================================== //
@@ -11,11 +7,6 @@
 
 
 Group::Group(int group_id): id(group_id), level_tree(), players(), levelZero(0) {}
-
-
-void Group::setLevelTree(LevelTree& level_tree){}
-void Group::setLevelZero(LevelData& levelZero){}//Maybe useless
-void Group::setPlayers(HashTable players){}
 
 int Group::getNumPlayers(){
     return players.curr_amount;
@@ -108,7 +99,6 @@ bool Group::merge(Group& group){
             iter++;
         }
     }
-    //levelZero += group.levelZero;
     return true;
 }
 

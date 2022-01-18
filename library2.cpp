@@ -4,78 +4,117 @@
 
 
 
-
 void *Init(int k, int scale){
     return new Game(k, scale);
 }
 
 StatusType MergeGroups(void *DS, int GroupID1, int GroupID2){
-    if (DS == nullptr){
-        return INVALID_INPUT;
+    try {
+        if (DS == nullptr){
+            return INVALID_INPUT;
+        }
+        Game* game = (Game*)DS;
+        return game->MergeGroups(GroupID1, GroupID2);
     }
-    Game* game = (Game*)DS;
-    return game->MergeGroups(GroupID1, GroupID2);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType AddPlayer(void *DS, int PlayerID, int GroupID, int score){
-    if (DS == nullptr){
-        return INVALID_INPUT;
+    try {
+        if (DS == nullptr){
+            return INVALID_INPUT;
+        }
+        Game* game = (Game*)DS;
+        return game->addPlayer(PlayerID, GroupID, score);
     }
-    Game* game = (Game*)DS;
-    return game->addPlayer(PlayerID, GroupID, score);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType RemovePlayer(void *DS, int PlayerID){
-    Game* game = (Game*)DS;
-    if(game == nullptr){
-        return  INVALID_INPUT;
+    try {
+        Game* game = (Game*)DS;
+        if(game == nullptr){
+            return  INVALID_INPUT;
+        }
+        return game->removePlayer(PlayerID);
     }
-    return game->removePlayer(PlayerID);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType IncreasePlayerIDLevel(void *DS, int PlayerID, int LevelIncrease){
-    Game* game = (Game*)DS;
-    if(game == nullptr){
-        return  INVALID_INPUT;
+    try {
+        Game* game = (Game*)DS;
+        if(game == nullptr){
+            return  INVALID_INPUT;
+        }
+        return game->IncreasePlayerLevel(PlayerID,LevelIncrease);
     }
-    return game->IncreasePlayerLevel(PlayerID,LevelIncrease);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType ChangePlayerIDScore(void *DS, int PlayerID, int NewScore){
-    if (DS == nullptr){
-        return INVALID_INPUT;
+    try {
+        if (DS == nullptr){
+            return INVALID_INPUT;
+        }
+        Game* game = (Game*)DS;
+        return game->ChangePlayerScore(PlayerID, NewScore);
     }
-    Game* game = (Game*)DS;
-    return game->ChangePlayerScore(PlayerID, NewScore);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType GetPercentOfPlayersWithScoreInBounds(void *DS, int GroupID, int score, int lowerLevel, int higherLevel,
                                                 double * players){
-    if (DS == nullptr){
-        return INVALID_INPUT;
+    try {
+        if (DS == nullptr){
+            return INVALID_INPUT;
+        }
+        if (lowerLevel > higherLevel){
+            return FAILURE;
+        }
+        Game* game = (Game*)DS;
+        return game->getPercentOfPlayersWithScoreInBounds(GroupID, score, lowerLevel, higherLevel, players);
     }
-    if (lowerLevel > higherLevel){
-        return FAILURE;
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
     }
-    Game* game = (Game*)DS;
-    return game->getPercentOfPlayersWithScoreInBounds(GroupID, score, lowerLevel, higherLevel, players);
 }
 
 StatusType AverageHighestPlayerLevelByGroup(void *DS, int GroupID, int m, double * level){
-    Game* game = (Game*)DS;
-    if(game == nullptr){
-        return  INVALID_INPUT;
+    try {
+        Game* game = (Game*)DS;
+        if(game == nullptr){
+            return  INVALID_INPUT;
+        }
+        return game->AverageHighestPlayerLevelByGroup(GroupID,m,level);
     }
-    return game->AverageHighestPlayerLevelByGroup(GroupID,m,level);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 StatusType GetPlayersBound(void *DS, int GroupID, int score, int m,
                            int * LowerBoundPlayers, int * HigherBoundPlayers){
-    Game* game = (Game*)DS;
-    if(game == nullptr){
-        return  INVALID_INPUT;
+    try {
+        Game* game = (Game*)DS;
+        if(game == nullptr){
+            return  INVALID_INPUT;
+        }
+        return game->GetPlayersBound(GroupID,score,m,LowerBoundPlayers,HigherBoundPlayers);
     }
-    return game->GetPlayersBound(GroupID,score,m,LowerBoundPlayers,HigherBoundPlayers);
+    catch (std::bad_alloc&){
+        return ALLOCATION_ERROR;
+    }
 }
 
 void Quit(void** DS){

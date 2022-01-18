@@ -7,9 +7,6 @@ Player::~Player() {}
 void Player::setScore(int new_score) {
     score = new_score;
 }
-void Player::setLevel(int new_level) {
-    level = new_level;
-}
 
 void Player::setGroupID(int new_group){
     group_id = new_group;

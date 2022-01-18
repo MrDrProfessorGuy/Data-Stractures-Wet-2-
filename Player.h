@@ -21,7 +21,6 @@ public:
     ~Player();
     
     void setScore(int new_score);
-    void setLevel(int new_level);
     void setGroupID(int new_group);
     
     //void increaseScore(int amount);

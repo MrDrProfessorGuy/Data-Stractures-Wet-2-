@@ -23,7 +23,6 @@ add_executable(Data_Stractures_Wet_2
         LevelData.cpp LevelData.h
         HashTable.cpp HashTable.h
         UnionFind.cpp UnionFind.h
-        LevelNode.h
         LevelTree.h
         library2.cpp)
 
